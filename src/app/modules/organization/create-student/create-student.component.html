@@ -29,7 +29,7 @@
     </header>
 
     <div class="father">
-      <div class="container-personal container-data">
+      <div class="container-personal">
         <div class="section">
           <div>
             <label for="idCard">Carné de identidad *</label>
@@ -57,7 +57,8 @@
         </div>
 
         <!-- Datos personales -->
-        <div class="section" *ngIf="isFormVisible">
+        <!-- Cambiar los *ngIf por [style.visibility] -->
+        <div class="section" [style.visibility]="isFormVisible ? 'visible' : 'hidden'">
           <h3>Datos personales</h3>
 
           <div class="form-group">
@@ -137,7 +138,7 @@
       </div>
 
       <!-- Datos de procedencia -->
-      <div class="section Origin-data container-data" *ngIf="isFormVisible">
+      <div class="section Origin-data container-data" [style.visibility]="isFormVisible ? 'visible' : 'hidden'">
         <h3>Datos de procedencia</h3>
 
         <div class="form-group">
@@ -162,7 +163,7 @@
       </div>
 
       <!-- Datos sociales -->
-      <div class="section social-data container-data" *ngIf="isFormVisible">
+      <div class="section social-data container-data" [style.visibility]="isFormVisible ? 'visible' : 'hidden'">
         <h3>Datos sociales</h3>
 
         <div class="form-group">
@@ -235,7 +236,7 @@
 
     <!-- Botones -->
 
-    <footer class="container-footer" *ngIf="isFormVisible">
+    <footer class="container-footer" [style.visibility]="isFormVisible ? 'visible' : 'hidden'">
       <div class="buttons">
         <button type="button" class="cancel" (click)="navigateToAddStudent()">
           <svg

@@ -1,130 +1,146 @@
-.form-container {  
-    margin: 1rem 1rem;
+.form-container {
+  margin: 1rem 1rem;
 
-    header {   
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    height: 2.5rem;
+    background-color: #fcfcfc;
+  }
+
+  .header-container {
+    display: flex; /* Alinea los elementos en línea horizontalmente */
+    align-items: center; /* Alinea verticalmente el SVG y el texto */
+    padding-left: 1rem; /* Espacio a la izquierda de todo el contenedor */
+  }
+
+  .icon-container {
+    display: flex; /* Flexbox para alinear los elementos dentro de icon-container */
+    align-items: center; /* Asegura que el icono esté centrado verticalmente */
+    padding-right: 1rem; /* Espacio entre el SVG y los párrafos */
+  }
+
+  .p-container {
+    display: flex; /* Alinea los párrafos horizontalmente */
+    gap: 1rem; /* Espacio entre los párrafos */
+  }
+
+  p {
+    margin: 0; /* Elimina márgenes predeterminados de los <p> */
+    font-size: 1rem; /* Ajusta el tamaño del texto */
+  }
+
+  .father {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+
+    > div {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  .section {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid rgb(43, 154, 228);
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fcfcfc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+
+    > div {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start; /* Evita expansión innecesaria */
+    }
+
+    .autocomplete {
+      align-self: flex-end;
+      background: #28a745;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem; /* Separa el botón del contenido sin empujar */
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .textarea-address textarea {
+      height: 40px;
+      resize: vertical;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+
+    button {
+      display: flex;
       align-items: center;
-      margin-bottom: 1rem;  
-      height: 2.5rem;
-      background-color: #fcfcfc;   
-    } 
-
-    .header-container {
-      display: flex;   /* Alinea los elementos en línea horizontalmente */
-      align-items: center;  /* Alinea verticalmente el SVG y el texto */
-      padding-left: 1rem;  /* Espacio a la izquierda de todo el contenedor */
-    }
-    
-    .icon-container {
-      display: flex; /* Flexbox para alinear los elementos dentro de icon-container */
-      align-items: center;  /* Asegura que el icono esté centrado verticalmente */
-      padding-right: 1rem; /* Espacio entre el SVG y los párrafos */
-    }
-    
-    .p-container {
-      display: flex; /* Alinea los párrafos horizontalmente */
-      gap: 1rem; /* Espacio entre los párrafos */
-    }
-    
-    p {
-      margin: 0; /* Elimina márgenes predeterminados de los <p> */
-      font-size: 1rem; /* Ajusta el tamaño del texto */
-    }   
-    
-
-    .father{ 
-      margin-top: 1rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;  
-    }
-    
-    .section {  
-      border-top: 2px solid rgb(43, 154, 228);  
-      width: 20rem;
-      margin-bottom: 20px;
-      padding: 15px;
-      background-color: #fcfcfc;
+      gap: 5px;
+      margin-left: 0.5rem;
+      padding: 5px 10px;
+      border: none;
       border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      height: fit-content;
+      cursor: pointer;
+      font-size: 14px;
+    }
 
-    .autocomplete{
-      margin-top: 1rem;
-      margin-left: 11.5rem;
+    .cancel {
+      background: #dc3545;
+      color: white;
+    }
+
+    .create {
       background: #28a745;
       color: white;
     }
-      h3 {
-        margin-bottom: 10px;
-        color: #333;
-      }
-  
-      label {
-        display: block;
-        font-weight: bold; 
-        margin-top: 10px;       
-      }
-  
-      input, select,textarea {
-        width: 100%;
-        padding: 8px;
-        margin-top: 5px;
-        border: 1px solid #ccc;     
-      }
-      
-      .textarea-address textarea {
-        height: 40px; 
-        resize: vertical; 
-      }     
-      
-    }
-  
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-      margin-left: 1rem;
-  
-      button {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        margin-left: 0.5rem;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 14px;
-      }
-  
-      .cancel {
-     
-        background: #dc3545;
-        color: white;
-      }
-  
-      .create {
-        background: #28a745;
-        color: white;
-      }
-  
-      .create-list {
-        background: #28a745;
-        color: white;
-      }
-    }
 
-  
-    footer{
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 4rem;
-      background-color: #fcfcfc;   
+    .create-list {
+      background: #28a745;
+      color: white;
     }
-    
   }
-  
+
+  footer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 4rem;
+    background-color: #fcfcfc;
+  }
+}
