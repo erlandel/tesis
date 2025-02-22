@@ -1,7 +1,7 @@
 import {NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrganizationComponent } from './test/organization.component';
-import { OrganizationStudentComponent } from './create-student/organization-student.component';
+import { CreateStudentComponent } from './create-student/create-student.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'; 
 import { ListStudentComponent } from './list-student/list-student.component';
@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'create-student',
-    component: OrganizationStudentComponent,
+    component: CreateStudentComponent,
   },
   {
     path: 'list-student',
@@ -27,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [OrganizationComponent, OrganizationStudentComponent,ListStudentComponent], 
+  declarations: [OrganizationComponent, CreateStudentComponent,ListStudentComponent], 
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

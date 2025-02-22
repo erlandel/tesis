@@ -27,10 +27,10 @@ interface StudentData {
 
 @Component({
   selector: 'app-organization-student',
-  templateUrl: './organization-student.component.html',
-  styleUrls: ['./organization-student.component.scss'],
+  templateUrl: './create-student.component.html',
+  styleUrls: ['./create-student.component.scss'],
 })
-export class OrganizationStudentComponent implements OnInit {
+export class CreateStudentComponent implements OnInit {
   studentForm!: FormGroup;
   apiUrl = 'https://api.ejemplo.com/estudiantes';
   isFormVisible: boolean = false; // Bandera para controlar la visibilidad del formulario
