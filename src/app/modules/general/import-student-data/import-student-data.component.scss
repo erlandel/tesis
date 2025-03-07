@@ -84,6 +84,9 @@
       font-size: 14px;
       background-color: #28a745; 
       color: white;
+      .icon{
+        display: flex;
+      }
     }
   }
 
@@ -105,6 +108,9 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 14px;
+      .icon{
+        display: flex;
+      }
     }
 
     .disabled-button {

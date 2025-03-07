@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { GeneralComponent } from './test/general.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ImportStudentDataComponent } from './import-student-data/import-student-data.component';
+import { IconComponent } from "../../../icons/icon.component";
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+    IconComponent
+]
 })
 export class GeneralModule { }

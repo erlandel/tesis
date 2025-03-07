@@ -10,6 +10,9 @@ header {
     height: 2.5rem;
     background-color: #fcfcfc;   
   } 
+  .icon{
+    display: flex;
+  }
 
   .header-container {
     display: flex;   
@@ -38,6 +41,11 @@ header {
     display: flex;
     align-items: center;   
     margin-right: 0.5rem;
+    
+    .icon{
+      display: flex;
+    }
+  
   }
   .button-header{
     display: flex;

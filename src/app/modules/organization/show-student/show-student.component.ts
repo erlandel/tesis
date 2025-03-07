@@ -3,12 +3,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { StudentDetail } from '../interface/StudentDetail';
+import { IconComponent } from "../../../../icons/icon.component";
 
 
 @Component({
   selector: 'app-show-student',
   templateUrl: './show-student.component.html',
-  styleUrls: ['./show-student.component.scss']
+  styleUrls: ['./show-student.component.scss'],
+  standalone: true, 
+  imports: [IconComponent]
 })
 export class ShowStudentComponent implements OnInit {
   student: StudentDetail = {

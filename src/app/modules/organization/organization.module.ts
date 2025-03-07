@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'; 
 import { ListStudentComponent } from './list-student/list-student.component';
 import { ShowStudentComponent } from './show-student/show-student.component';
+import { IconComponent } from 'src/icons/icon.component';
+
 
 
 const routes: Routes = [
@@ -34,8 +36,9 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
-    ReactiveFormsModule,  
-  ],
+    ReactiveFormsModule,
+    IconComponent
+],
   exports: [RouterModule], 
  
 })

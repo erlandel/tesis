@@ -106,7 +106,7 @@
     justify-content: space-between;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    margin-left: 1rem;
+  
 
     button {
       display: flex;
@@ -118,6 +118,10 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 14px;
+
+      .icon{
+        display: flex;
+      }
     }
 
     .cancel {
