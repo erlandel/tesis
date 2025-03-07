@@ -1153,7 +1153,7 @@ export class SiderComponent {
             },
             {
               name: 'Importar',
-              url: '',
+              url: 'import-student-data',
               permission: '',
             },
           ],

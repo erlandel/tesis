@@ -48,6 +48,8 @@ export class ListStudentComponent implements OnInit {
     }
   ];
 
+  isFilterMenuVisible: boolean = false;
+
   constructor(
     private router: Router,
     private http: HttpClient
@@ -57,6 +59,10 @@ export class ListStudentComponent implements OnInit {
     // Cuando el backend esté listo, descomentar esta línea
     // this.loadStudents();
     console.log('Students loaded');
+  }
+
+  toggleFilterMenu() {
+    this.isFilterMenuVisible = !this.isFilterMenuVisible;
   }
 
   loadStudents() {

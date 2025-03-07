@@ -11,6 +11,22 @@
     background-color: #fcfcfc;   
   } 
 
+  .filter-menu {
+    margin-top: 2rem;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    z-index: 1000;
+    right: 10rem;  // Mueve el menú hacia la izquierda desde el borde derecho
+  
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+  }
+
   .header-container {
     display: flex;   
     align-items: center; 

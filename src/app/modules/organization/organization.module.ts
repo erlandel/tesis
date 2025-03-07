@@ -7,6 +7,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ListStudentComponent } from './list-student/list-student.component';
 import { ShowStudentComponent } from './show-student/show-student.component';
 
+
 const routes: Routes = [
   {
     path: 'organization',
@@ -24,6 +25,7 @@ const routes: Routes = [
     path: 'show-student/:ci',
     component: ShowStudentComponent
   },
+
 ];
 
 @NgModule({
