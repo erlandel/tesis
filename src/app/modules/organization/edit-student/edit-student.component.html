@@ -1,0 +1,235 @@
+<div class="form-container">
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+      <header class="header">
+        <div class="header-container">
+          <div class="icon-container">
+            <app-icon name="home" class="icon"></app-icon>
+          </div>
+          <div class="p-container icon-container">
+            <p>/ 01</p>
+            <p>/ Estudiante</p>
+            <p style="color: #3e99e7">/ Entrada</p>
+            <p>/ Editar</p>
+          </div>
+        </div>
+      </header>
+  
+      <div class="father">
+        <div class="container-personal">          
+  
+          <!-- Datos personales -->
+          <div class="section" >
+            <h3>Datos personales</h3>
+            <div class="form-group">                
+                <label for="ciStudent">Carnet de identidad *</label>
+                <input
+                  id="ciStudent"
+                  type="text"
+                  formControlName="ciStudent"
+                  readonly
+                />
+              </div>
+            <div class="form-group">                
+              <label for="nationality">Nacionalidad *</label>
+              <input
+                id="nationality"
+                type="text"
+                formControlName="nationality"
+                readonly
+              />
+            </div>
+  
+            <div class="form-group">
+              <label for="lastName">Apellidos *</label>
+              <input
+                id="lastName"
+                type="text"
+                formControlName="lastName"
+                readonly
+              />
+            </div>
+  
+            <div class="form-group">
+              <label for="firstName">Nombre(s) *</label>
+              <input
+                id="firstName"
+                type="text"
+                formControlName="firstName"
+                readonly
+              />
+            </div>
+  
+            <div class="form-group textarea-address">
+              <label for="address">Dirección particular *</label>
+              <textarea
+                id="address"
+                formControlName="address"
+                readonly
+              ></textarea>
+            </div>
+  
+            <div class="form-group">
+              <label for="province">Provincia de residencia *</label>
+              <input
+                id="province"
+                type="text"
+                formControlName="province"
+                readonly
+              />
+            </div>
+  
+            <div class="form-group">
+              <label for="municipality">Municipio de residencia *</label>
+              <input
+                id="municipality"
+                type="text"
+                formControlName="municipality"
+                readonly
+              />
+            </div>
+  
+            <div class="form-group">
+              <label for="skinColor">Color de piel</label>
+              <input
+                id="skinColor"
+                type="text"
+                formControlName="skinColor"
+                readonly
+              />
+            </div>
+  
+            <div class="form-group">
+              <label for="gender">Sexo *</label>
+              <input id="gender" type="text" formControlName="gender" readonly />
+            </div>
+            <div class="btn-verify">
+                <button type="button" (click)="updateStudentFUC()">
+                    <app-icon name="upadte" class="iconUpdate"></app-icon>
+                    Actualizar
+                </button>
+              </div>
+          </div>          
+        </div>
+  
+        <!-- Datos de procedencia -->
+        <div class="section Origin-data container-data">
+          <h3>Datos de procedencia</h3>
+  
+          <div class="form-group">
+            <label for="preUniversity">Preuniversitario *</label>
+            <select id="preUniversity" formControlName="preUniversity">
+              <!-- Puedes agregar más opciones según tus necesidades -->
+              <option value="pre-university-1">Preuniversitario 1</option>
+              <option value="pre-university-2">Preuniversitario 2</option>
+              <option value="pre-university-3">Preuniversitario 3</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="admissionMethod">Vía de ingreso *</label>
+            <select id="admissionMethod" formControlName="admissionMethod">
+              <!-- Opciones para la vía de ingreso -->
+              <option value="method-1">Método 1</option>
+              <option value="method-2">Método 2</option>
+              <option value="method-3">Método 3</option>
+            </select>
+          </div>
+        </div>
+  
+        <!-- Datos sociales -->
+        <div class="section social-data container-data">
+          <h3>Datos sociales</h3>
+  
+          <div class="form-group">
+            <label for="motherEducation">Escolaridad de la madre *</label>
+            <select id="motherEducation" formControlName="motherEducation">
+              <option value="none">Ninguno</option>
+              <option value="primary">Primaria</option>
+              <option value="secondary">Secundaria</option>
+              <option value="highschool">Preparatoria</option>
+              <option value="university">Universidad</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="fatherEducation">Escolaridad del padre *</label>
+            <select id="fatherEducation" formControlName="fatherEducation">
+              <option value="none">Ninguno</option>
+              <option value="primary">Primaria</option>
+              <option value="secondary">Secundaria</option>
+              <option value="highschool">Preparatoria</option>
+              <option value="university">Universidad</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="motherOccupation">Ocupación de la madre *</label>
+            <select id="motherOccupation" formControlName="motherOccupation">
+              <option value="housewife">Ama de casa</option>
+              <option value="teacher">Maestra</option>
+              <option value="doctor">Médica</option>
+              <option value="engineer">Ingeniera</option>
+              <option value="other">Otro</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="fatherOccupation">Ocupación del padre *</label>
+            <select id="fatherOccupation" formControlName="fatherOccupation">
+              <option value="worker">Obrero</option>
+              <option value="teacher">Maestro</option>
+              <option value="doctor">Médico</option>
+              <option value="engineer">Ingeniero</option>
+              <option value="other">Otro</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="motherWorkSector">Sector laboral de la madre *</label>
+            <select id="motherWorkSector" formControlName="motherWorkSector">
+              <option value="education">Educación</option>
+              <option value="health">Salud</option>
+              <option value="services">Servicios</option>
+              <option value="commerce">Comercio</option>
+              <option value="other">Otro</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="fatherWorkSector">Sector laboral del padre *</label>
+            <select id="fatherWorkSector" formControlName="fatherWorkSector">
+              <option value="education">Educación</option>
+              <option value="health">Salud</option>
+              <option value="services">Servicios</option>
+              <option value="commerce">Comercio</option>
+              <option value="other">Otro</option>
+            </select>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Botones -->
+  
+      <footer class="container-footer">
+        <div class="buttons">
+          <button type="button" class="cancel" (click)="navigateToAddStudent()">
+            <app-icon name="menu" class="icon"></app-icon>
+            Cancelar
+          </button>
+  
+          <!-- Botón: Crear y regresar al listado -->
+          <button
+            type="button"
+            class="create-list"
+            (click)="onSubmit('create-list')"
+          >
+          <app-icon name="pencilWhite" class="icon"></app-icon>
+  
+          <app-icon name="menu" class="icon"></app-icon>
+            Editar y regresar al listado
+          </button>
+        </div>
+      </footer>
+    </form>
+  </div>
+  

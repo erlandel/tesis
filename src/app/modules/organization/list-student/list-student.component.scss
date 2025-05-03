@@ -54,9 +54,13 @@
 
   .table-container {
     overflow-x: auto;
+    .btn-show-container{
+    display: flex;
+    }
   }
   
   table {  
+    width: 100%;
     border-collapse: collapse;
     background: white;
     border-radius: 5px;
@@ -91,6 +95,32 @@
   .button-header{
     display: flex;
     gap:0.5rem;
+  }
+
+  .container-filter{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background: white;
+    border-top: 2px solid rgb(43, 154, 228);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    
+    div {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    label {
+      margin-right: 0.5rem;
+    }
+    
+    input {
+      padding: 0.3rem;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+    }
   }
 
 }  

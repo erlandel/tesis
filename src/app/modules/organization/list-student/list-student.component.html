@@ -1,8 +1,7 @@
 <div class="container">
-
   <header class="header">
     <div class="header-container">
-      <div class="icon-container">     
+      <div class="icon-container">
         <app-icon name="home" class="icon"></app-icon>
       </div>
       <div class="p-container icon-container">
@@ -13,72 +12,114 @@
       </div>
     </div>
 
-
     <div class="button-header">
       <button class="action-button" (click)="toggleFilterMenu()">
         <app-icon name="filter" class="icon"></app-icon>
         filtrar
         <app-icon name="collapseArrow" class="icon"></app-icon>
       </button>
-    
+
       <div *ngIf="isFilterMenuVisible" class="filter-menu">
-        <label><input type="checkbox"> Comisión</label>
-        <label><input type="checkbox"> Apellidos</label>
-        <label><input type="checkbox"> Nombre(s)</label>
-        <label><input type="checkbox"> Carné de identidad</label>
-        <label><input type="checkbox"> Índice</label>
-        <label><input type="checkbox"> Preuniversitario</label>
-        <label><input type="checkbox"> Provincia</label>
-        <label><input type="checkbox"> Sexo</label>
-        <label><input type="checkbox"> Vía de ingreso</label>
+        <label><input type="checkbox" /> Comisión</label>
+        <label><input type="checkbox" /> Apellidos</label>
+        <label><input type="checkbox" /> Nombre(s)</label>
+        <label><input type="checkbox" /> Carné de identidad</label>
+        <label><input type="checkbox" /> Índice</label>
+        <label><input type="checkbox" /> Preuniversitario</label>
+        <label><input type="checkbox" /> Provincia</label>
+        <label><input type="checkbox" /> Sexo</label>
+        <label><input type="checkbox" /> Vía de ingreso</label>
       </div>
-    
+
       <button class="action-button" (click)="navigateToAddStudent()">
         <app-icon name="addUser" class="icon"></app-icon>
         Agregar Nuevo
       </button>
     </div>
   </header>
-  
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Comisión</th>
-            <th>Apellidos</th>
-            <th>Nombre(s)</th>
-            <th>Carné de identidad</th>
-            <th>Índice</th>
-            <th>Preuniversitario</th>
-            <th>Provincia</th>
-            <th>Sexo</th>
-            <th>Vía de ingreso</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let student of students">
-            <td>{{ student.commission }}</td>
-            <td>{{ student.lastName }}</td>
-            <td>{{ student.firstName }}</td>
-            <td>{{ student.idCard }}</td>
-            <td>{{ student.index }}</td>
-            <td>{{ student.preuniversity }}</td>
-            <td>{{ student.province }}</td>
-            <td>{{ student.gender }}</td>
-            <td>{{ student.entryWay }}</td>
-            <td>
+<!-- 
+  <div class="container-filter">
+    <div>    
+        <label for="commission">Comisión</label>
+        <select id="commission" name="commission">
+          <option value="" selected></option>
+          <option value="comision-1">Comisión CIP LH(CIP - La Habana)</option>
+          <option value="comision-2">Comisión CIP LH(CIP - La Habana)</option>
+          <option value="comision-3">Comisión 3</option>
+        </select>
+        <div>
+        <select id="commission" name="commission">
+          <option value="" selected></option>
+          <option value="comision-1">Comisión CIP LH(CIP - La Habana)</option>
+          <option value="comision-2">Comisión CIP LH(CIP - La Habana)</option>
+          <option value="comision-3">Comisión 3</option>
+        </select>
+      </div>
+      <app-icon name="remove" class="icon"></app-icon>     
+    </div>
 
+    <div>
+      <div class="filter-buttons-container">
+        <div class="filter-actions">
+          <button>
+            <app-icon name="filterWithe" class="icon"></app-icon>Filtrar</button>
+          <button>Restablecer</button>
+        </div>
+        <div class="advanced-filter">
+          <button>
+            <app-icon name="settings" class="icon"></app-icon>
+            Filtro avanzado</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Comisión</th>
+          <th>Apellidos</th>
+          <th>Nombre(s)</th>
+          <th>Carné de identidad</th>
+          <th>Índice</th>
+          <th>Preuniversitario</th>
+          <th>Provincia</th>
+          <th>Sexo</th>
+          <th>Vía de ingreso</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students">
+          <td>{{ student.commission }}</td>
+          <td>{{ student.lastName }}</td>
+          <td>{{ student.firstName }}</td>
+          <td>{{ student.idCard }}</td>
+          <td>{{ student.index }}</td>
+          <td>{{ student.preuniversity }}</td>
+          <td>{{ student.province }}</td>
+          <td>{{ student.gender }}</td>
+          <td>{{ student.entryWay }}</td>
+          <td>
+            <div class="btn-show-container">
               <button class="btn-show" (click)="showStudent(student.idCard)">
                 <app-icon name="show" class="icon"></app-icon>
                 Mostrar
               </button>
-              
-          
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+              <button class="btn-show" (click)="editStudent(student.idCard)">
+                <app-icon name="pencil" class="icon"></app-icon>
+                Editar
+              </button>
+              <button class="btn-show" (click)="deleteStudent(student.idCard)">
+                <app-icon name="delete" class="icon"></app-icon>
+                Eliminar
+              </button>
+            </div>
+           
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
+</div>

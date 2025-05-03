@@ -7,6 +7,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ListStudentComponent } from './list-student/list-student.component';
 import { ShowStudentComponent } from './show-student/show-student.component';
 import { IconComponent } from 'src/icons/icon.component';
+import { EditStudentComponent } from './edit-student/edit-student.component';
 
 
 
@@ -27,11 +28,15 @@ const routes: Routes = [
     path: 'show-student/:ci',
     component: ShowStudentComponent
   },
+  {
+    path: 'edit-student/:ci',
+    component: EditStudentComponent,
+  },
 
 ];
 
 @NgModule({
-  declarations: [OrganizationComponent, CreateStudentComponent,ListStudentComponent], 
+  declarations: [OrganizationComponent, CreateStudentComponent,ListStudentComponent,EditStudentComponent], 
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';  // Para hacer las peticiones HTTP
 import { Router } from '@angular/router';
+import { FortesMessagesService } from 'src/app/core/messages/FortesMessages.service';
 
 
 
@@ -34,13 +35,13 @@ export class CreateStudentComponent implements OnInit {
   studentForm!: FormGroup;
   apiUrl = 'https://api.ejemplo.com/estudiantes';
   isFormVisible: boolean = false; // Bandera para controlar la visibilidad del formulario
-  isValidIdCard: boolean = true; // Bandera para controlar si la cédula es válida
+  isValidCiStudent: boolean = true; // Bandera para controlar si la cédula es válida
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private router:Router) {}
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private messagesService: FortesMessagesService) { }
 
   ngOnInit(): void {
     this.studentForm = this.fb.group({
-      idCard: ['', [Validators.required, this.idCardValidator]],
+      ciStudent: ['', [Validators.required, this.ciStudentValidator]],
       nationality: [{ value: '', disabled: true }, Validators.required],
       lastName: [{ value: '', disabled: true }, Validators.required],
       firstName: [{ value: '', disabled: true }, Validators.required],
@@ -63,7 +64,7 @@ export class CreateStudentComponent implements OnInit {
 
 
   // Validador personalizado para verificar que idCard tenga exactamente 11 dígitos
-  idCardValidator(control: AbstractControl): ValidationErrors | null {
+  ciStudentValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (value && value.length !== 11) {
       console.log(value);
@@ -74,25 +75,25 @@ export class CreateStudentComponent implements OnInit {
   onKeyDown(event: KeyboardEvent): void {
     const input = (event.target as HTMLInputElement).value;
     const allowedKeys = ['Backspace', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight'];
-    const isNumber = /[0-9]/.test(event.key);   
+    const isNumber = /[0-9]/.test(event.key);
     if (input.length >= 11 && isNumber) {
-      event.preventDefault();  
-    } 
-    if (!isNumber && !allowedKeys.includes(event.key)) {
-      event.preventDefault();  
+      event.preventDefault();
     }
-  } 
+    if (!isNumber && !allowedKeys.includes(event.key)) {
+      event.preventDefault();
+    }
+  }
   onAutocomplete(): void {
-    const idCard = this.studentForm.get('idCard')?.value;
+    const idCard = this.studentForm.get('ciStudent')?.value;
 
     // Verifica si el idCard tiene 11 dígitos antes de hacer la solicitud
-    if (this.studentForm.get('idCard')?.invalid) {
-      this.isValidIdCard = false;  
+    if (this.studentForm.get('ciStudent')?.invalid) {
+      this.isValidCiStudent = false;
       return;
     }
 
     // Si la cédula es válida, entonces realizamos la petición
-    this.isValidIdCard = true;
+    this.isValidCiStudent = true;
 
     this.http.get<StudentData>(`/api/student/${idCard}`).subscribe({
       next: (data) => {
@@ -111,20 +112,20 @@ export class CreateStudentComponent implements OnInit {
       },
       error: (error) => {
 
-          // Cargar datos de prueba en caso de error
-      this.studentForm.patchValue({
-        nationality: "Cubano",
-        lastName: "Pérez",
-        firstName: "Juan",
-        address: "Calle 8 #456, La Habana",
-        province: "La Habana",
-        municipality: "Centro Habana",
-        skinColor: "Trigueño",
-        gender: "Masculino",
-      });
+        // Cargar datos de prueba en caso de error
+        this.studentForm.patchValue({
+          nationality: "Cubano",
+          lastName: "Pérez",
+          firstName: "Juan",
+          address: "Calle 8 #456, La Habana",
+          province: "La Habana",
+          municipality: "Centro Habana",
+          skinColor: "Trigueño",
+          gender: "Masculino",
+        });
 
         this.isFormVisible = true;
-        
+
 
         console.log('Error al obtener los datos:', error);
       },
@@ -133,26 +134,23 @@ export class CreateStudentComponent implements OnInit {
 
   // Función para manejar el submit del formulario
   onSubmit(action: string = 'create'): void {
-   
     if (this.studentForm.valid) {
-      console.log('Enviando datos:', this.studentForm.value);
-      
-      this.http.post(this.apiUrl, this.studentForm.value).subscribe({
+      this.http.post(this.apiUrl, this.studentForm.value, { observe: 'response' }).subscribe({
         next: (response) => {
-          console.log('Formulario enviado con éxito:', response);
-          alert('Datos enviados correctamente');
+          if (response.status === 200) {
 
-          if (action === 'create') {
-            this.isFormVisible = false;
-            this.studentForm.reset();
-          }       
-  
-          // Redirigir solo si la acción es 'create-list'
-          if (action === 'create-list') {
-            this.router.navigate(['/organization/list-student']);
+            if (action === 'create') {
+              this.messagesService.success('La operación se completó correctamente');
+              this.isFormVisible = false;
+              this.studentForm.reset();
+            }
+            // Redirigir solo si la acción es 'create-list'
+            if (action === 'create-list') {
+              this.router.navigate(['/organization/list-student']);
+            }
           }
         },
-        error: (error) => {        
+        error: (error) => {
           console.error('Error al enviar el formulario:', error);
           alert('Hubo un error al enviar los datos. Inténtalo de nuevo.');
         }
@@ -162,8 +160,8 @@ export class CreateStudentComponent implements OnInit {
     }
   }
 
-  navigateToAddStudent() {     
+  navigateToAddStudent() {
     this.router.navigate(['/organization/list-student']);
   }
-  
+
 }

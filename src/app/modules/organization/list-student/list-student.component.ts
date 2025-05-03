@@ -48,6 +48,23 @@ export class ListStudentComponent implements OnInit {
     }
   ];
 
+  filterCriteria = {
+    commission: '',
+    lastName: '',
+    firstName: '',
+    idCard: '',
+    index: '',
+    preuniversity: '',
+    province: '',
+    municipality: '',
+    skinColor: '',
+    gender: '',
+    entryWay: '',
+    nationality: '',
+    careerRequest: '',
+    preselection: ''
+  };
+
   isFilterMenuVisible: boolean = false;
 
   constructor(
@@ -80,7 +97,24 @@ export class ListStudentComponent implements OnInit {
     this.router.navigate(['/organization/create-student']);
   }
 
-  showStudent(idCard: string) {
-    this.router.navigate(['/organization/show-student', idCard]);
+  showStudent(ciStudent: string) {
+    this.router.navigate(['/organization/show-student', ciStudent]);
   }
+
+  editStudent(ciStudent: string) {
+    this.router.navigate(['/organization/edit-student', ciStudent]);
+  }
+
+  deleteStudent(ciStudent: string) {
+    this.http.delete(`http://localhost:3000/api/students/${ciStudent}`).subscribe({
+      next: () => {
+        this.loadStudents();
+      },
+      error: (error) => {
+        console.error('Error al eliminar estudiante:', error);
+      }
+    });
+  }
+
+  
 }

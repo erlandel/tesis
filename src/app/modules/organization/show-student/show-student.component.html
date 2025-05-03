@@ -33,15 +33,15 @@
       <div class="card">
         <h3>Datos personales</h3>
         <ul>
-          <li><strong>Carné de identidad:</strong> {{ student.ci }}</li>
-          <li><strong>Apellidos:</strong> {{ student.apellidos }}</li>
-          <li><strong>Nombre(s):</strong> {{ student.nombres }}</li>
-          <li><strong>Dirección particular:</strong> {{ student.direccion }}</li>
-          <li><strong>Provincia de residencia:</strong> {{ student.provincia }}</li>
-          <li><strong>Municipio de residencia:</strong> {{ student.municipio }}</li>
-          <li><strong>Color de piel:</strong> {{ student.colorPiel }}</li>
-          <li><strong>Sexo:</strong> {{ student.sexo }}</li>
-          <li><strong>Nacionalidad:</strong> {{ student.nacionalidad }}</li>
+          <li><strong>Carné de identidad:</strong> {{ student.ciStudent }}</li>
+          <li><strong>Apellidos:</strong> {{ student.lastName }}</li>
+          <li><strong>Nombre(s):</strong> {{ student.firstName }}</li>
+          <li><strong>Dirección particular:</strong> {{ student.address }}</li>
+          <li><strong>Provincia de residencia:</strong> {{ student.province }}</li>
+          <li><strong>Municipio de residencia:</strong> {{ student.municipality }}</li>
+          <li><strong>Color de piel:</strong> {{ student.skinColor }}</li>
+          <li><strong>Sexo:</strong> {{ student.gender }}</li>
+          <li><strong>Nacionalidad:</strong> {{ student.nationality }}</li>
         </ul>
       </div>
   
@@ -50,8 +50,8 @@
         <h3>Datos de procedencia</h3>
         <ul>
           <li><strong>Índice académico:</strong> {{ student.indiceAcademico }}</li>
-          <li><strong>Preuniversitario:</strong> {{ student.preuniversitario }}</li>
-          <li><strong>Vía de ingreso:</strong> {{ student.viaIngreso }}</li>
+          <li><strong>Preuniversitario:</strong> {{ student.preUniversity }}</li>
+          <li><strong>Vía de ingreso:</strong> {{ student.admissionMethod }}</li>
           <li><strong>Procedencia:</strong> {{ student.procedencia || '-' }}</li>
           <li><strong>Situación:</strong> {{ student.situacion || '-' }}</li>
         </ul>
@@ -61,16 +61,14 @@
       <div class="card">
         <h3>Datos sociales</h3>
         <ul>
-          <li><strong>Escolaridad de la madre:</strong> {{ student.escolaridadMadre }}</li>
-          <li><strong>Escolaridad del padre:</strong> {{ student.escolaridadPadre }}</li>
-          <li><strong>Ocupación de la madre:</strong> {{ student.ocupacionMadre }}</li>
-          <li><strong>Ocupación del padre:</strong> {{ student.ocupacionPadre }}</li>
-          <li><strong>Sector laboral de la madre:</strong> {{ student.sectorMadre }}</li>
-          <li><strong>Sector laboral del padre:</strong> {{ student.sectorPadre }}</li>
+          <li><strong>Escolaridad de la madre:</strong> {{ student.motherEducation }}</li>
+          <li><strong>Escolaridad del padre:</strong> {{ student.fatherEducation }}</li>
+          <li><strong>Ocupación de la madre:</strong> {{ student.motherOccupation }}</li>
+          <li><strong>Ocupación del padre:</strong> {{ student.fatherOccupation }}</li>
+          <li><strong>Sector laboral de la madre:</strong> {{ student.motherWorkSector }}</li>
+          <li><strong>Sector laboral del padre:</strong> {{ student.fatherWorkSector }}</li>
         </ul>
       </div>
     </div>
-  
-  
-  </div>
+</div>
   

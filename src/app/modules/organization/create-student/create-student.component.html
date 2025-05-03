@@ -18,20 +18,20 @@
       <div class="container-personal">
         <div class="section">
           <div>
-            <label for="idCard">Carné de identidad *</label>
+            <label for="ciStudent">Carné de identidad *</label>
             <input
-              id="idCard"
+              id="ciStudent"
               type="text"
-              formControlName="idCard"
+              formControlName="ciStudent"
               (keydown)="onKeyDown($event)"
               [ngClass]="{
                 'invalid-input':
-                  studentForm.get('idCard')?.invalid &&
-                  studentForm.get('idCard')?.touched,
+                  studentForm.get('ciStudent')?.invalid &&
+                  studentForm.get('ciStudent')?.touched,
               }"
               [style.border]="
-                studentForm.get('idCard')?.invalid &&
-                studentForm.get('idCard')?.touched
+                studentForm.get('ciStudent')?.invalid &&
+                studentForm.get('ciStudent')?.touched
                   ? '1px solid red'
                   : ''
               "
@@ -44,7 +44,10 @@
 
         <!-- Datos personales -->
         <!-- Cambiar los *ngIf por [style.visibility] -->
-        <div class="section" [style.visibility]="isFormVisible ? 'visible' : 'hidden'">
+        <div
+          class="section"
+          [style.visibility]="isFormVisible ? 'visible' : 'hidden'"
+        >
           <h3>Datos personales</h3>
 
           <div class="form-group">
@@ -124,7 +127,10 @@
       </div>
 
       <!-- Datos de procedencia -->
-      <div class="section Origin-data container-data" [style.visibility]="isFormVisible ? 'visible' : 'hidden'">
+      <div
+        class="section Origin-data container-data"
+        [style.visibility]="isFormVisible ? 'visible' : 'hidden'"
+      >
         <h3>Datos de procedencia</h3>
 
         <div class="form-group">
@@ -149,7 +155,10 @@
       </div>
 
       <!-- Datos sociales -->
-      <div class="section social-data container-data" [style.visibility]="isFormVisible ? 'visible' : 'hidden'">
+      <div
+        class="section social-data container-data"
+        [style.visibility]="isFormVisible ? 'visible' : 'hidden'"
+      >
         <h3>Datos sociales</h3>
 
         <div class="form-group">
@@ -222,7 +231,10 @@
 
     <!-- Botones -->
 
-    <footer class="container-footer" [style.visibility]="isFormVisible ? 'visible' : 'hidden'">
+    <footer
+      class="container-footer"
+      [style.visibility]="isFormVisible ? 'visible' : 'hidden'"
+    >
       <div class="buttons">
         <button type="button" class="cancel" (click)="navigateToAddStudent()">
           <app-icon name="menu" class="icon"></app-icon>
@@ -241,9 +253,9 @@
           class="create-list"
           (click)="onSubmit('create-list')"
         >
-        <app-icon name="save" class="icon"></app-icon>
+          <app-icon name="save" class="icon"></app-icon>
 
-        <app-icon name="menu" class="icon"></app-icon>
+          <app-icon name="menu" class="icon"></app-icon>
           Crear y regresar al listado
         </button>
       </div>

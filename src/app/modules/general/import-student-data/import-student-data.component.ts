@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FortesMessagesService } from 'src/app/core/messages/FortesMessages.service';
 
 @Component({
   selector: 'app-import-student-data',
@@ -16,7 +17,8 @@ export class ImportStudentDataComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private messagesService: FortesMessagesService
   ) {}
 
   ngOnInit(): void {
@@ -39,13 +41,15 @@ export class ImportStudentDataComponent implements OnInit {
 
   onAnalyzeFile(): void {
     if (!this.selectedFile) {
-      alert('Por favor, seleccione un archivo Excel para analizar.');
+      this.messagesService.error('Por favor, seleccione un archivo Excel para analizar');
+      // alert('Por favor, seleccione un archivo Excel para analizar.');
       return;
     }
 
     // Check if the file is an Excel file
     const fileExtension = this.selectedFile.name.split('.').pop()?.toLowerCase();
     if (fileExtension !== 'xlsx' && fileExtension !== 'xls') {
+       this.messagesService.error('Ha ocurrido un error al procesar la solicitud');
       alert('Por favor, seleccione un archivo Excel válido (.xlsx o .xls).');
       return;
     }
