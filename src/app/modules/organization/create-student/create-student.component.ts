@@ -3,28 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { HttpClient } from '@angular/common/http';  // Para hacer las peticiones HTTP
 import { Router } from '@angular/router';
 import { FortesMessagesService } from 'src/app/core/messages/FortesMessages.service';
+import { StudentData } from '../interface/studentData';
 
-
-
-// Definir la interfaz para los datos del estudiante
-interface StudentData {
-  nationality: string;
-  lastName: string;
-  firstName: string;
-  address: string;
-  province: string;
-  municipality: string;
-  skinColor?: string;
-  gender: string;
-  preUniversity: string;
-  admissionMethod: string;
-  motherEducation: string;
-  fatherEducation: string;
-  motherOccupation: string;
-  fatherOccupation: string;
-  motherWorkSector: string;
-  fatherWorkSector: string;
-}
 
 @Component({
   selector: 'app-organization-student',
@@ -33,7 +13,7 @@ interface StudentData {
 })
 export class CreateStudentComponent implements OnInit {
   studentForm!: FormGroup;
-  apiUrl = 'https://api.ejemplo.com/estudiantes';
+  apiUrl = 'http://localhost:3000/students';
   isFormVisible: boolean = false; // Bandera para controlar la visibilidad del formulario
   isValidCiStudent: boolean = true; // Bandera para controlar si la cédula es válida
 
@@ -72,6 +52,8 @@ export class CreateStudentComponent implements OnInit {
     }
     return null;
   }
+
+
   onKeyDown(event: KeyboardEvent): void {
     const input = (event.target as HTMLInputElement).value;
     const allowedKeys = ['Backspace', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight'];
@@ -83,6 +65,8 @@ export class CreateStudentComponent implements OnInit {
       event.preventDefault();
     }
   }
+
+
   onAutocomplete(): void {
     const idCard = this.studentForm.get('ciStudent')?.value;
 
@@ -95,7 +79,7 @@ export class CreateStudentComponent implements OnInit {
     // Si la cédula es válida, entonces realizamos la petición
     this.isValidCiStudent = true;
 
-    this.http.get<StudentData>(`/api/student/${idCard}`).subscribe({
+    this.http.get<StudentData>(`http://localhost:3000/students/FUC/${idCard}`).subscribe({
       next: (data) => {
         // Si la petición es exitosa, asignamos los valores del backend a los campos del formulario
         this.studentForm.patchValue({
@@ -111,50 +95,39 @@ export class CreateStudentComponent implements OnInit {
         this.isFormVisible = true;
       },
       error: (error) => {
-
-        // Cargar datos de prueba en caso de error
-        this.studentForm.patchValue({
-          nationality: "Cubano",
-          lastName: "Pérez",
-          firstName: "Juan",
-          address: "Calle 8 #456, La Habana",
-          province: "La Habana",
-          municipality: "Centro Habana",
-          skinColor: "Trigueño",
-          gender: "Masculino",
-        });
-
-        this.isFormVisible = true;
-
-
         console.log('Error al obtener los datos:', error);
       },
     });
   }
 
   // Función para manejar el submit del formulario
-  onSubmit(action: string = 'create'): void {
-    if (this.studentForm.valid) {
-      this.http.post(this.apiUrl, this.studentForm.value, { observe: 'response' }).subscribe({
-        next: (response) => {
-          if (response.status === 200) {
+ async onSubmit(action: string = 'create'): Promise<void> {   
+    const formData = this.studentForm.getRawValue();
+    if (formData) {
+      try {
+        const response = await fetch(this.apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        }); 
+        if (response.status === 200) {
+          this.messagesService.success('Estudiante registrado correctamente');
 
-            if (action === 'create') {
-              this.messagesService.success('La operación se completó correctamente');
-              this.isFormVisible = false;
-              this.studentForm.reset();
-            }
-            // Redirigir solo si la acción es 'create-list'
-            if (action === 'create-list') {
-              this.router.navigate(['/organization/list-student']);
-            }
+          if (action === 'create') {
+            this.isFormVisible = false;
+            this.studentForm.reset();
           }
-        },
-        error: (error) => {
-          console.error('Error al enviar el formulario:', error);
-          alert('Hubo un error al enviar los datos. Inténtalo de nuevo.');
+          if (action === 'create-list') {
+            this.router.navigate(['/organization/list-student']);
+          }
+        } else {         
+          this.messagesService.error('Error al registrar el estudiante');
         }
-      });
+      } catch (error) {
+        console.error('Error al enviar el formulario:', error);
+      }
     } else {
       alert('Por favor, completa todos los campos obligatorios.');
     }

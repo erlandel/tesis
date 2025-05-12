@@ -16,7 +16,7 @@ export interface ShowStudent {
     fatherOccupation: string;
     motherWorkSector: string;
     fatherWorkSector: string;
-    indiceAcademico: string;
+    indiceAcademico?: string;
     procedencia?: string;
     situacion?: string;
     comision?: string; // Atributo adicional

@@ -82,7 +82,7 @@
           <th>Apellidos</th>
           <th>Nombre(s)</th>
           <th>Carné de identidad</th>
-          <th>Índice</th>
+          <!-- <th>Índice</th> -->
           <th>Preuniversitario</th>
           <th>Provincia</th>
           <th>Sexo</th>
@@ -92,26 +92,26 @@
       </thead>
       <tbody>
         <tr *ngFor="let student of students">
-          <td>{{ student.commission }}</td>
+          <td>{{ 'Comision de ejemplo' }}</td>
           <td>{{ student.lastName }}</td>
           <td>{{ student.firstName }}</td>
-          <td>{{ student.idCard }}</td>
-          <td>{{ student.index }}</td>
-          <td>{{ student.preuniversity }}</td>
+          <td>{{ student.ciStudent }}</td>
+          <!-- <td>{{ student.index }}</td> -->
+          <td>{{ student.preUniversity }}</td>
           <td>{{ student.province }}</td>
           <td>{{ student.gender }}</td>
-          <td>{{ student.entryWay }}</td>
+          <td>{{ student.skinColor }}</td>
           <td>
             <div class="btn-show-container">
-              <button class="btn-show" (click)="showStudent(student.idCard)">
+              <button class="btn-show" (click)="showStudent(student.ciStudent)">
                 <app-icon name="show" class="icon"></app-icon>
                 Mostrar
               </button>
-              <button class="btn-show" (click)="editStudent(student.idCard)">
+              <button class="btn-show" (click)="editStudent(student.ciStudent)">
                 <app-icon name="pencil" class="icon"></app-icon>
                 Editar
               </button>
-              <button class="btn-show" (click)="deleteStudent(student.idCard)">
+              <button class="btn-show" (click)="deleteStudent(student.ciStudent)">
                 <app-icon name="delete" class="icon"></app-icon>
                 Eliminar
               </button>

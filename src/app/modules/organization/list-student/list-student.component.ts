@@ -1,52 +1,19 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Student } from '../interface/Student';
-
-
+import { Student } from '../interface/student';
+import { FortesMessagesService } from 'src/app/core/messages/FortesMessages.service';
 
 @Component({
   selector: 'app-list-student',
   templateUrl: './list-student.component.html',
-  styleUrls: ['./list-student.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./list-student.component.scss']
 })
 export class ListStudentComponent implements OnInit {
-  students: Student[] = [
-    {
-      commission: 'Comisión CIP LH(CIP - La Habana)',
-      lastName: 'Antune Leyva',
-      firstName: 'Keren Ruth',
-      idCard: '06092067474',
-      index: 98.75,
-      preuniversity: '2300-VLADIMIR I. LENIN',
-      province: 'La Habana',
-      gender: 'Femenino',
-      entryWay: 'Institutos Preuniversitarios'
-    },
-    {
-      commission: 'Comisión CIP LH(CIP - La Habana)',
-      lastName: 'Arias Quispe',
-      firstName: 'Erick Manuel',
-      idCard: '06092367688',
-      index: 98.46,
-      preuniversity: '2300-VLADIMIR I. LENIN',
-      province: 'La Habana',
-      gender: 'Masculino',
-      entryWay: 'Institutos Preuniversitarios'
-    },
-    {
-      commission: 'Comisión CIP LH(CIP - La Habana)',
-      lastName: 'Atienza Moya',
-      firstName: 'Rafael',
-      idCard: '06071367720',
-      index: 98.16,
-      preuniversity: '2300-VLADIMIR I. LENIN',
-      province: 'La Habana',
-      gender: 'Masculino',
-      entryWay: 'Institutos Preuniversitarios'
-    }
-  ];
+  
+  constructor( private http: HttpClient, private router: Router, private messagesService: FortesMessagesService) { }
+
+  students: Student[] = [];
 
   filterCriteria = {
     commission: '',
@@ -67,14 +34,11 @@ export class ListStudentComponent implements OnInit {
 
   isFilterMenuVisible: boolean = false;
 
-  constructor(
-    private router: Router,
-    private http: HttpClient
-  ) { }
+
 
   ngOnInit() {
     // Cuando el backend esté listo, descomentar esta línea
-    // this.loadStudents();
+    this.loadStudents();
     console.log('Students loaded');
   }
 
@@ -82,15 +46,20 @@ export class ListStudentComponent implements OnInit {
     this.isFilterMenuVisible = !this.isFilterMenuVisible;
   }
 
-  loadStudents() {
-    this.http.get<Student[]>('http://localhost:3000/api/students').subscribe({
-      next: (data) => {
+  async loadStudents() {
+    try {
+      const response = await fetch('http://localhost:3000/students');
+      if (response.status === 200) {
+        const data: Student[] = await response.json();
         this.students = data;
-      },
-      error: (error) => {
-        console.error('Error al cargar estudiantes:', error);
+        console.log('Students loaded:', this.students);
+      } else {
+        this.messagesService.error('Estudiante registrado correctamente');
       }
-    });
+      
+    } catch (error) {
+      console.error('Error al cargar estudiantes:', error);
+    }
   }
   
   navigateToAddStudent() {     

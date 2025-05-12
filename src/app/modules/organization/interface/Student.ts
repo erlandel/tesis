@@ -1,11 +1,11 @@
 export interface Student {
-    commission: string;
+    // commission: string;
     lastName: string;
     firstName: string;
-    idCard: string;
-    index: number;
-    preuniversity: string;
+    ciStudent: string;
+    // index: number;
+    preUniversity: string;
     province: string;
     gender: string;
-    entryWay: string;
+    skinColor: string;
   }
