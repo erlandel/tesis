@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Student } from '../interface/student';
 import { FortesMessagesService } from 'src/app/core/messages/FortesMessages.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-list-student',
@@ -11,7 +12,12 @@ import { FortesMessagesService } from 'src/app/core/messages/FortesMessages.serv
 })
 export class ListStudentComponent implements OnInit {
   
-  constructor( private http: HttpClient, private router: Router, private messagesService: FortesMessagesService) { }
+  constructor(
+    private http: HttpClient, 
+    private router: Router, 
+    private messagesService: FortesMessagesService,
+    private modal: NzModalService
+  ) { }
 
   students: Student[] = [];
 
@@ -52,7 +58,7 @@ export class ListStudentComponent implements OnInit {
       if (response.status === 200) {
         const data: Student[] = await response.json();
         this.students = data;
-        console.log('Students loaded:', this.students);
+        // console.log('Students loaded:', this.students);
       } else {
         this.messagesService.error('Estudiante registrado correctamente');
       }
@@ -75,13 +81,34 @@ export class ListStudentComponent implements OnInit {
   }
 
   deleteStudent(ciStudent: string) {
-    this.http.delete(`http://localhost:3000/api/students/${ciStudent}`).subscribe({
-      next: () => {
-        this.loadStudents();
+    this.modal.confirm({
+      nzTitle: '¿Estás seguro de eliminar este estudiante?',
+      nzContent: 'Esta acción no se puede deshacer',
+      nzOkText: 'Eliminar',
+      nzOkType: 'primary',
+      nzOnOk: async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/students/${ciStudent}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          if (response.ok) {
+            this.loadStudents();
+            this.messagesService.success('Estudiante eliminado correctamente');
+          } else {
+            const errorData = await response.json();
+            console.error('Error al eliminar estudiante:', errorData);
+            this.messagesService.error('Error al eliminar el estudiante');
+          }
+        } catch (error) {
+          console.error('Error al eliminar estudiante:', error);
+          this.messagesService.error('Error al eliminar el estudiante');
+        }
       },
-      error: (error) => {
-        console.error('Error al eliminar estudiante:', error);
-      }
+      nzCancelText: 'Cancelar'
     });
   }
 

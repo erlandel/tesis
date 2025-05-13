@@ -14,7 +14,7 @@ import { StudentData } from '../interface/studentData';
 })
 export class EditStudentComponent implements OnInit {
   studentForm!: FormGroup;
-  apiUrl = 'https://api.ejemplo.com/estudiantes';
+  apiUrl = 'http://localhost:3000/students/';
 
 
   constructor(
@@ -46,7 +46,7 @@ export class EditStudentComponent implements OnInit {
       fatherWorkSector: ['', Validators.required],
     });
       // Capturar el parámetro de la ruta
-  const ciStudent = this.route.snapshot.paramMap.get('ci');
+  const ciStudent = this.route.snapshot.paramMap.get('ciStudent');
 
   if (ciStudent) {
     this.loadStudentData(ciStudent);
@@ -55,7 +55,7 @@ export class EditStudentComponent implements OnInit {
   }
 
   loadStudentData(ciStudent: string): void {
-    this.http.get<StudentData>(`/api/student/${ciStudent}`).subscribe({
+    this.http.get<StudentData>(`http://localhost:3000/students/${ciStudent}`).subscribe({
       next: (data) => {
         this.studentForm.patchValue({
           ciStudent: ciStudent,
@@ -78,31 +78,7 @@ export class EditStudentComponent implements OnInit {
         });
       },
       error: (error) => {
-        console.error('Error al cargar datos del estudiante:', error);
-        this.studentForm.patchValue({
-          ciStudent: ciStudent,
-          nationality: 'Cubano',
-          lastName: 'Pérez',
-          firstName: 'Juan',
-          address: 'Calle 8 #456, La Habana',
-          province: 'La Habana',
-          municipality: 'Centro Habana',
-          skinColor: 'Trigueño',
-          gender: 'Masculino',
-        
-          // estos deben coincidir con el valor del <option value="...">
-          preUniversity: 'pre-university-1', // o 'pre-university-2' según el caso
-          admissionMethod: 'method-1',
-        
-          motherEducation: 'university',
-          fatherEducation: 'secondary',
-        
-          motherOccupation: 'engineer',
-          fatherOccupation: 'engineer',
-        
-          motherWorkSector: 'health',
-          fatherWorkSector: 'education',
-        });
+        console.error('Error al cargar datos del estudiante:', error);    
         
       }
     });
@@ -111,20 +87,18 @@ export class EditStudentComponent implements OnInit {
 
   updateStudentFUC() {   
     const ciStudent = this.studentForm.get('ciStudent')!.value; // Use the non-null assertion operator
-    this.http.post('URL_DEL_BACKEND', { ciStudent })
-      .subscribe({
-        next: (response: any) => {
-          console.log('Student updated successfully', response);
+    this.http.get(`http://localhost:3000/students/FUC/${ciStudent}`).subscribe({
+      next: (response: any) => {        
           // Suponiendo que la respuesta contiene los datos actualizados
           this.studentForm.patchValue({
-            nationality: response.data.nationality,
-            lastName: response.data.lastName,
-            firstName: response.data.firstName,
-            address: response.data.address,
-            province: response.data.province,
-            municipality: response.data.municipality,
-            skinColor: response.data.skinColor,
-            gender: response.data.gender,
+            nationality: response.nationality,
+            lastName: response.lastName,
+            firstName: response.firstName,
+            address: response.address,
+            province: response.province,
+            municipality: response.municipality,
+            skinColor: response.skinColor,
+            gender: response.gender,
           });
         },
         error: (error) => {        
@@ -132,31 +106,35 @@ export class EditStudentComponent implements OnInit {
         }
       });
   }
+
+  
   // Función para manejar el submit del formulario
-  onSubmit(action: string = 'create'): void {
+  async onSubmit(): Promise<void> {
     if (this.studentForm.valid) {
-      this.http.post(this.apiUrl, this.studentForm.value, { observe: 'response' }).subscribe({
-        next: (response) => {
-          if (response.status === 200) {
-
-            if (action === 'create') {
-              this.messagesService.success('La operación se completó correctamente');
-
-              this.studentForm.reset();
-            }
-            // Redirigir solo si la acción es 'create-list'
-            if (action === 'create-list') {
-              this.router.navigate(['/organization/list-student']);
-            }
-          }
-        },
-        error: (error) => {
-          console.error('Error al enviar el formulario:', error);
-          alert('Hubo un error al enviar los datos. Inténtalo de nuevo.');
+      try {
+        const formData = this.studentForm.getRawValue(); // Obtiene los valores incluyendo los campos deshabilitados
+        const ciStudent = formData.ciStudent; // Extraemos el ciStudent para usarlo en la URL
+                
+        console.log('FormData:', formData);
+        const response = await fetch(`${this.apiUrl}${ciStudent}`, {
+          method: 'put',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+        
+        if (response.ok) {
+          this.messagesService.success('La operación se completó correctamente');
+          this.router.navigate(['/organization/list-student']);
+        } else {
+          this.messagesService.error('Error al actualizar el estudiante');
         }
-      });
+      } catch (error) {
+        console.error('Error al enviar el formulario:', error);       
+      }
     } else {
-      alert('Por favor, completa todos los campos obligatorios.');
+      this.messagesService.error('Por favor, completa todos los campos obligatorios.');
     }
   }
 

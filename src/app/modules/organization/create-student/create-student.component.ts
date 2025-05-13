@@ -68,7 +68,7 @@ export class CreateStudentComponent implements OnInit {
 
 
   onAutocomplete(): void {
-    const idCard = this.studentForm.get('ciStudent')?.value;
+    const ciStudent = this.studentForm.get('ciStudent')?.value;
 
     // Verifica si el idCard tiene 11 dígitos antes de hacer la solicitud
     if (this.studentForm.get('ciStudent')?.invalid) {
@@ -79,7 +79,7 @@ export class CreateStudentComponent implements OnInit {
     // Si la cédula es válida, entonces realizamos la petición
     this.isValidCiStudent = true;
 
-    this.http.get<StudentData>(`http://localhost:3000/students/FUC/${idCard}`).subscribe({
+    this.http.get<StudentData>(`http://localhost:3000/students/FUC/${ciStudent}`).subscribe({
       next: (data) => {
         // Si la petición es exitosa, asignamos los valores del backend a los campos del formulario
         this.studentForm.patchValue({
@@ -102,8 +102,8 @@ export class CreateStudentComponent implements OnInit {
 
   // Función para manejar el submit del formulario
  async onSubmit(action: string = 'create'): Promise<void> {   
-    const formData = this.studentForm.getRawValue();
-    if (formData) {
+    if (this.studentForm.valid) {
+      const formData = this.studentForm.getRawValue();
       try {
         const response = await fetch(this.apiUrl, {
           method: 'POST',
@@ -129,7 +129,13 @@ export class CreateStudentComponent implements OnInit {
         console.error('Error al enviar el formulario:', error);
       }
     } else {
-      alert('Por favor, completa todos los campos obligatorios.');
+      this.messagesService.error('Por favor, completa todos los campos obligatorios.');
+      
+      // Opcional: Marcar todos los campos como tocados para mostrar errores
+      Object.keys(this.studentForm.controls).forEach(key => {
+        const control = this.studentForm.get(key);
+        control?.markAsTouched();
+      });
     }
   }
 

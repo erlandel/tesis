@@ -8,6 +8,7 @@ import { ListStudentComponent } from './list-student/list-student.component';
 import { ShowStudentComponent } from './show-student/show-student.component';
 import { IconComponent } from 'src/icons/icon.component';
 import { EditStudentComponent } from './edit-student/edit-student.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 
@@ -25,11 +26,11 @@ const routes: Routes = [
     component: ListStudentComponent,
   },
   {
-    path: 'show-student/:ci',
+    path: 'show-student/:ciStudent',
     component: ShowStudentComponent
   },
   {
-    path: 'edit-student/:ci',
+    path: 'edit-student/:ciStudent',
     component: EditStudentComponent,
   },
 
@@ -47,4 +48,4 @@ const routes: Routes = [
   exports: [RouterModule], 
  
 })
-export class OrganizationModule {}
+export class OrganizationModule { }
