@@ -1,0 +1,74 @@
+<div class="container">
+    <header class="header">
+        <div class="header-container">
+          <div class="icon-container">
+            <app-icon name="home" class="icon"></app-icon>
+          </div>
+          <div class="p-container icon-container">
+            <p>/ 04</p>
+            <p>/ Modelos de datos excel</p>
+            <p style="color: #3e99e7">/ Importar</p>
+            <p>/ Listar</p>
+          </div>
+        </div>
+    
+        <div class="button-header">
+          <button class="action-button" (click)="toggleFilterMenu()">
+            <app-icon name="filter" class="icon"></app-icon>
+            filtrar
+            <app-icon name="collapseArrow" class="icon"></app-icon>
+          </button>
+    
+          <div *ngIf="isFilterMenuVisible" class="filter-menu">
+            <label><input type="checkbox" /> Comisión</label>         
+            <label><input type="checkbox" /> Nombre</label>
+            <label><input type="checkbox" /> Tipo de modelo</label>
+            <label><input type="checkbox" /> Usuario</label>
+          </div>
+    
+          <button class="action-button" (click)="navigateToAddStudent()">
+            <app-icon name="addUser" class="icon"></app-icon>
+            Agregar Nuevo
+          </button>
+        </div>
+      </header>
+
+
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Comisión</th>            
+              <th>Nombre</th>            
+              <th>Tipo de modelo</th>
+              <th>Descripción</th>
+              <th>Usuario</th>           
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let student of students">
+              <td>{{ 'Comision de ejemplo' }}</td>             
+              <td>{{ student.name }}</td>         
+              <td>{{ student.modelType }}</td>
+              <td>{{ student.description }}</td>
+              <td>{{ 'Usurio de ejemplo' }}</td>            
+              <td>
+                <div class="btn-show-container">
+                  <button class="btn-show" (click)="showStudent(student.ciStudent)">
+                    <app-icon name="show" class="icon"></app-icon>
+                    Mostrar
+                  </button>                
+                  <button class="btn-show">
+                    <app-icon name="download" class="icon"></app-icon>
+                    Descargar
+                  </button>
+                </div>
+               
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+</div>

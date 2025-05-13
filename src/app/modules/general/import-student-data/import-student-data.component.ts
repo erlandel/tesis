@@ -98,7 +98,7 @@ export class ImportStudentDataComponent implements OnInit {
             this.selectedFile = null;
             this.fileAnalyzed = false; // Reiniciar el estado de análisis
           } else if (action === 'create-list') {
-            this.router.navigate(['/organization/list-student']);
+            this.router.navigate(['/general/student-excel-list']);
           }
         },
         error: (error) => {
@@ -117,6 +117,6 @@ export class ImportStudentDataComponent implements OnInit {
   }
 
   navigateToList(): void {
-    this.router.navigate(['/organization/list-student']);
+    this.router.navigate(['/general/student-excel-list']);
   }
 }

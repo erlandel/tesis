@@ -1,0 +1,61 @@
+<div class="container">
+    <header class="header">
+        <div class="header-container">
+          <div class="icon-container">
+            <app-icon name="home" class="icon"></app-icon>
+          </div>
+          <div class="p-container icon-container">
+            <p>/ 04</p>
+            <p>/ Modelos de datos excel</p>
+            <p>/ Importar</p>
+            <p>/ Mostrar "{{ student.name}}"</p>
+          </div>
+        </div>
+    
+        <div class="button-header">    
+          <button class="action-button" (click)="navigate()">
+            <app-icon name="menu" class="icon"></app-icon>
+            Regresar al lisitado
+          </button>          
+        </div>
+      </header>
+
+      <div class="content-container">
+        <div class="section-title">
+          <h3>Importar</h3>
+        </div>
+
+        <div class="info-section">
+          <div class="info-row">
+            <div class="info-label">Comisión</div>
+            <div class="info-value">Comisión CIP VC(CIP - Villa Clara)</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Nombre</div>
+            <div class="info-value">{{ student.name}}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Tipo de modelo</div>
+            <div class="info-value">{{ student.modelType}}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Descripción</div>
+            <div class="info-value">{{ student.description}}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Usuario</div>
+            <div class="info-value">Ramiro Alberto Pérez Vázquez</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Modelo</div>
+            <div class="info-value">
+              <button class="download-button">
+                <app-icon name="download"  class="icon"></app-icon>
+                Descargar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+  

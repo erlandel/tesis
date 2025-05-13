@@ -8,7 +8,7 @@ import { ListStudentComponent } from './list-student/list-student.component';
 import { ShowStudentComponent } from './show-student/show-student.component';
 import { IconComponent } from 'src/icons/icon.component';
 import { EditStudentComponent } from './edit-student/edit-student.component';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+// import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 

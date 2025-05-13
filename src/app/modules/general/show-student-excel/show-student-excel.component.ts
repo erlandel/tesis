@@ -6,12 +6,12 @@ import { StudentData } from '../../../../interface/studentData';
 
 @Component({
   selector: 'app-show-student',
-  templateUrl: './show-student.component.html',
-  styleUrls: ['./show-student.component.scss'],
+  templateUrl: './show-student-excel.component.html',
+  styleUrls: ['./show-student-excel.component.scss'],
   standalone: true,
   imports: [IconComponent]
 })
-export class ShowStudentComponent implements OnInit {
+export class ShowStudentExcelComponent implements OnInit {
   student: StudentData = {
     ciStudent: '',
     nationality: '',
@@ -64,6 +64,6 @@ export class ShowStudentComponent implements OnInit {
   }
 
   navigate() {
-    this.router.navigate(['/organization/list-student']);
+    this.router.navigate(['/general/student-excel-list']);
   }
 }

@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { HttpClient } from '@angular/common/http';  // Para hacer las peticiones HTTP
 import { Router } from '@angular/router';
 import { FortesMessagesService } from 'src/app/core/messages/FortesMessages.service';
-import { StudentData } from '../interface/studentData';
+import { StudentData } from '../../../../interface/studentData';
 
 
 @Component({
@@ -101,7 +101,7 @@ export class CreateStudentComponent implements OnInit {
   }
 
   // Función para manejar el submit del formulario
- async onSubmit(action: string = 'create'): Promise<void> {   
+  async onSubmit(action: string = 'create'): Promise<void> {
     if (this.studentForm.valid) {
       const formData = this.studentForm.getRawValue();
       try {
@@ -111,7 +111,7 @@ export class CreateStudentComponent implements OnInit {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(formData)
-        }); 
+        });
         if (response.status === 200) {
           this.messagesService.success('Estudiante registrado correctamente');
 
@@ -122,7 +122,7 @@ export class CreateStudentComponent implements OnInit {
           if (action === 'create-list') {
             this.router.navigate(['/organization/list-student']);
           }
-        } else {         
+        } else {
           this.messagesService.error('Error al registrar el estudiante');
         }
       } catch (error) {
@@ -130,7 +130,7 @@ export class CreateStudentComponent implements OnInit {
       }
     } else {
       this.messagesService.error('Por favor, completa todos los campos obligatorios.');
-      
+
       // Opcional: Marcar todos los campos como tocados para mostrar errores
       Object.keys(this.studentForm.controls).forEach(key => {
         const control = this.studentForm.get(key);
