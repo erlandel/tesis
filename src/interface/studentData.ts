@@ -16,10 +16,7 @@ export interface StudentData {
     fatherOccupation: string;
     motherWorkSector: string;
     fatherWorkSector: string;
-    modelType?: string;
-    description?: string;
     academicIndex?: string;
     origin?: string;
-    situation?: string;
-    name?: string;
+    situation?: string;    
 }

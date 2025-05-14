@@ -5,7 +5,7 @@ import { FortesMessagesService } from 'src/app/core/messages/FortesMessages.serv
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { IconComponent } from 'src/icons/icon.component';
 import { CommonModule } from '@angular/common';
-import { StudentData } from '../../../../interface/studentData';
+import { Excel } from 'src/interface/excel';
 
 
 @Component({
@@ -24,24 +24,24 @@ export class ListStudentExcelComponent implements OnInit {
     private modal: NzModalService
   ) { }
 
-  students: StudentData[] = [];
+  excel: Excel[] = [];
 
-  filterCriteria = {
-    commission: '',
-    lastName: '',
-    firstName: '',
-    idCard: '',
-    index: '',
-    preuniversity: '',
-    province: '',
-    municipality: '',
-    skinColor: '',
-    gender: '',
-    entryWay: '',
-    nationality: '',
-    careerRequest: '',
-    preselection: ''
-  };
+  // filterCriteria = {
+  //   commission: '',
+  //   lastName: '',
+  //   firstName: '',
+  //   idCard: '',
+  //   index: '',
+  //   preuniversity: '',
+  //   province: '',
+  //   municipality: '',
+  //   skinColor: '',
+  //   gender: '',
+  //   entryWay: '',
+  //   nationality: '',
+  //   careerRequest: '',
+  //   preselection: ''
+  // };
 
   isFilterMenuVisible: boolean = false;
 
@@ -49,7 +49,7 @@ export class ListStudentExcelComponent implements OnInit {
 
   ngOnInit() {
     // Cuando el backend esté listo, descomentar esta línea
-    this.loadStudents();
+    this.loadExcel();
     console.log('Students loaded');
   }
 
@@ -57,15 +57,16 @@ export class ListStudentExcelComponent implements OnInit {
     this.isFilterMenuVisible = !this.isFilterMenuVisible;
   }
 
-  async loadStudents() {
+  async loadExcel() {
     try {
-      const response = await fetch('http://localhost:3000/students');
+      const response = await fetch('http://localhost:3000/excel');
       if (response.status === 200) {
-        const data: StudentData[] = await response.json();
-        this.students = data;
+        const data: Excel[] = await response.json();
+        this.excel = data;
         // console.log('Students loaded:', this.students);
       } else {
-        this.messagesService.error('Estudiante registrado correctamente');
+        // this.messagesService.error('Error al cargar los datos del excel');
+        this.loadMockData();
       }
 
     } catch (error) {
@@ -73,12 +74,49 @@ export class ListStudentExcelComponent implements OnInit {
     }
   }
 
+
+  loadMockData() {
+    console.log('Cargando datos de prueba');
+    this.excel = [
+      {
+        id: '1',
+        name: 'Listado de Estudiantes 2023',
+        modelType: 'Estudiantes',
+        description: 'Listado completo de estudiantes del curso 2023'
+      },
+      {
+        id: '2',
+        name: 'Matrícula Primer Año',
+        modelType: 'Matrícula',
+        description: 'Datos de matrícula de estudiantes de primer año'
+      },
+      {
+        id: '3',
+        name: 'Evaluaciones Finales',
+        modelType: 'Evaluaciones',
+        description: 'Registro de evaluaciones finales del semestre'
+      },
+      {
+        id: '4',
+        name: 'Asistencia Mensual',
+        modelType: 'Asistencia',
+        description: 'Control de asistencia mensual de todos los grupos'
+      },
+      {
+        id: '5',
+        name: 'Becados 2023',
+        modelType: 'Becas',
+        description: 'Listado de estudiantes con beca universitaria'
+      }
+    ];
+  }
+
   navigateToAddStudent() {
     this.router.navigate(['/general/import-student-data']);
   }
 
-  showStudent(ciStudent: string) {
-    this.router.navigate(['/general/show-student-excel', ciStudent]);
+  showStudent(id: string) {
+    this.router.navigate(['/general/show-student-excel', id]);
   }
 
 

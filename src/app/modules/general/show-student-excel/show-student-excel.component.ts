@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IconComponent } from "../../../../icons/icon.component";
-import { StudentData } from '../../../../interface/studentData';
+import { Excel } from '../../../../interface/excel';
+
 
 
 @Component({
@@ -12,25 +13,14 @@ import { StudentData } from '../../../../interface/studentData';
   imports: [IconComponent]
 })
 export class ShowStudentExcelComponent implements OnInit {
-  student: StudentData = {
-    ciStudent: '',
-    nationality: '',
-    lastName: '',
-    firstName: '',
-    address: '',
-    province: '',
-    municipality: '',
-    skinColor: '',
-    gender: '',
-    preUniversity: '',
-    admissionMethod: '',
-    motherEducation: '',
-    fatherEducation: '',
-    motherOccupation: '',
-    fatherOccupation: '',
-    motherWorkSector: '',
-    fatherWorkSector: '',
+  excel: Excel = {
+    name: '',
+    modelType: '',
+    description: '',
+    id: ''
   };
+
+
 
   constructor(
     private router: Router,
@@ -39,26 +29,26 @@ export class ShowStudentExcelComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      const ciStudent = params['ciStudent'];
+      const id = params['id'];
 
-      if (ciStudent) {
-        this.fetchStudent(ciStudent);
+      if (id) {
+        this.fetchStudent(id);
       }
     });
   }
 
-  async fetchStudent(ci: string) {
+  async fetchStudent(id: string) {
     try {
-      const response = await fetch(`http://localhost:3000/students/${ci}`);
+      const response = await fetch(`http://localhost:3000/students/${id}`);
       if (response.ok) {
         const data = await response.json();
-        this.student = data;
+        this.excel = data;
       } else {
-        console.log('CI:' + ci);
+        console.log('CI:' + id);
         console.error('Error fetching student:', response.statusText);
       }
     } catch (error) {
-      console.log('CI:' + ci);
+      console.log('CI:' + id);
       console.error('Error fetching student:', error);
     }
   }

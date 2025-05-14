@@ -40,7 +40,7 @@
 
       <div class="form-group">       
             <label for="file">Fichero *</label>
-            <input type="file" id="file" (change)="onFileSelected($event)" /> 
+            <input type="file" accept=".xlsx" id="file" (change)="onFileSelected($event)" /> 
             <div >
               <button class="button-analyze" type="button" (click)="onAnalyzeFile()">
                 <app-icon name="analyze" class="icon"></app-icon>

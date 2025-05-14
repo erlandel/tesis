@@ -48,15 +48,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let student of students">
+            <tr *ngFor="let excel of excel">
               <td>{{ 'Comision de ejemplo' }}</td>             
-              <td>{{ student.name }}</td>         
-              <td>{{ student.modelType }}</td>
-              <td>{{ student.description }}</td>
+              <td>{{ excel.name }}</td>         
+              <td>{{ excel.modelType }}</td>
+              <td>{{ excel.description }}</td>
               <td>{{ 'Usurio de ejemplo' }}</td>            
               <td>
                 <div class="btn-show-container">
-                  <button class="btn-show" (click)="showStudent(student.ciStudent)">
+                  <button class="btn-show" (click)="showStudent(excel.id)">
                     <app-icon name="show" class="icon"></app-icon>
                     Mostrar
                   </button>                

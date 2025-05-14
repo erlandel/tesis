@@ -23,7 +23,7 @@ const routes: Routes = [
     component: ListStudentExcelComponent,
   },
   {
-    path: 'show-student-excel/:ciStudent',
+    path: 'show-student-excel/:id',
     component: ShowStudentExcelComponent,
   }
 ];
