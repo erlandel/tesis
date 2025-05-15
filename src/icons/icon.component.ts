@@ -6,7 +6,7 @@ import { Component, ElementRef, Input, AfterViewInit } from '@angular/core';
   standalone: true,
 })
 export class IconComponent implements AfterViewInit {
-  @Input() name: 'home' | 'analyze' | 'menu' | 'add' | 'save' | 'filter' | 'collapseArrow' | 'addUser' | 'show'| 'remove'| 'filterWithe'|'pencil'|'pencilWhite'|'delete'|'upadte'| 'download'|'FillForm'|'settings' = 'home'; // Nombres de los iconos disponibles
+  @Input() name: 'home' | 'analyze' | 'menu' | 'add' | 'save' | 'filter' | 'collapseArrow' | 'addUser' | 'show'| 'remove'| 'filterWithe'|'pencil'|'pencilWhite'|'delete'|'upadte'| 'back'| 'download'|'FillForm'|'settings' = 'home'; // Nombres de los iconos disponibles
 
   private icons: { [key: string]: string } = {
     home: `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
@@ -53,6 +53,7 @@ export class IconComponent implements AfterViewInit {
     upadte: `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"><path fill="#fff" fill-rule="evenodd" d="M1.903 7.297c0 3.044 2.207 5.118 4.686 5.547a.521.521 0 1 1-.178 1.027C3.5 13.367.861 10.913.861 7.297c0-1.537.699-2.745 1.515-3.663c.585-.658 1.254-1.193 1.792-1.602H2.532a.5.5 0 0 1 0-1h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V2.686l-.001.002c-.572.43-1.27.957-1.875 1.638c-.715.804-1.253 1.776-1.253 2.97m11.108.406c0-3.012-2.16-5.073-4.607-5.533a.521.521 0 1 1 .192-1.024c2.874.54 5.457 2.98 5.457 6.557c0 1.537-.699 2.744-1.515 3.663c-.585.658-1.254 1.193-1.792 1.602h1.636a.5.5 0 1 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 1 1 1 0v1.845h.002c.571-.432 1.27-.958 1.874-1.64c.715-.803 1.253-1.775 1.253-2.97" clip-rule="evenodd"/></svg>`,  
     download: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M5 20h14v-2H5zM19 9h-4V3H9v6H5l7 7z"/></svg>`,
     FillForm: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="m6.598 2.573l.694-.727l8.133 8.133q.479.479.479 1.156t-.479 1.156l-3.904 3.942q-.46.46-1.136.46q-.677 0-1.137-.46L5.344 12.29q-.479-.48-.479-1.156q0-.677.48-1.156L9.69 5.665zm3.806 3.806l-4.39 4.352q-.097.096-.125.202q-.03.106-.03.22h9.05q0-.114-.028-.22t-.125-.202zm8.173 11.313q-.633 0-1.066-.433q-.434-.434-.434-1.067q0-.448.236-.884t.495-.827q.186-.262.378-.51q.193-.248.391-.51q.198.262.39.51q.193.248.38.51q.259.39.494.827q.236.436.236.884q0 .633-.434 1.067q-.433.433-1.066.433M2 24v-2h20v2z"/></svg>`,
+    back: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M4.4 7.4L6.8 4h2.5L7.2 7h6.3a6.5 6.5 0 0 1 0 13H9l1-2h3.5a4.5 4.5 0 1 0 0-9H7.2l2.1 3H6.8L4.4 8.6L4 8z"/></svg>`,
   };
 
   constructor(private el: ElementRef) { }

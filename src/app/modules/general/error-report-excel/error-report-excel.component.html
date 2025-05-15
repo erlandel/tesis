@@ -1,0 +1,62 @@
+<div class="container">
+    <header class="header">
+        <div class="header-container">
+          <div class="icon-container">
+            <app-icon name="home" class="icon"></app-icon>
+          </div>
+          <div class="p-container icon-container">
+            <p>/ 04</p>
+            <p>/ Modelos de datos excel</p>
+            <p>/ Errores excel </p>          
+          </div>
+        </div>
+    
+        <div class="button-header">    
+          <button class="action-button" (click)="navigate()">
+            <app-icon name="back" class="icon"></app-icon>
+            Regresar
+          </button>          
+        </div>
+      </header>
+
+      <div class="content-container">
+        <div class="section-title">
+          <h3>Informe de errores en la importación de datos</h3>
+          <p *ngIf="errorMessage">{{ errorMessage }}</p>
+        </div>
+
+        <div class="section-title">
+          <h3>Estudiantes con errores</h3>
+        </div>
+        
+        <div class="info-section" *ngIf="loading">
+          <p>Cargando datos de estudiantes...</p>
+        </div>
+        
+        <div class="info-section" *ngIf="!loading && errorStudents.length === 0">
+          <p>No se encontraron estudiantes con errores.</p>
+        </div>
+        
+        <div class="error-list" *ngIf="!loading && errorStudents.length > 0">
+          <div class="error-card" *ngFor="let student of errorStudents">
+            <div class="error-header">
+              <h4>Carné de Identidad: {{student.ciStudent}}</h4>
+            </div>
+            <div class="error-details">
+              <div class="error-row">
+                <div class="error-field">Campos con error:</div>
+                <div class="error-message">
+                  <span *ngIf="student.files && student.files.length > 0">
+                    <ng-container *ngFor="let field of student.files; let last = last">
+                      {{ getFieldNameInSpanish(field) }}{{ !last ? ', ' : '' }}
+                    </ng-container>
+                  </span>
+                  <span *ngIf="!student.files || student.files.length === 0">Error no especificado</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+  

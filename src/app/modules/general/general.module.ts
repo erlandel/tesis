@@ -7,6 +7,7 @@ import { ImportStudentDataComponent } from './import-student-data/import-student
 import { IconComponent } from 'src/icons/icon.component';
 import { ListStudentExcelComponent } from './student-excel-list/student-excel-list.component';
 import { ShowStudentExcelComponent } from './show-student-excel/show-student-excel.component';
+import { ErrorReportExcelComponent } from './error-report-excel/error-report-excel.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'show-student-excel/:id',
     component: ShowStudentExcelComponent,
+  },
+  {
+    path: 'error-report-excel',
+    component: ErrorReportExcelComponent,
   }
 ];
 

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FortesMessagesService } from 'src/app/core/messages/FortesMessages.service';
 import { StudentData } from 'src/interface/studentData';
+import { ErrorReportService } from 'src/app/services/error-report.service';
 
 @Component({
   selector: 'app-import-student-data',
@@ -46,7 +47,8 @@ export class ImportStudentDataComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private messagesService: FortesMessagesService
+    private messagesService: FortesMessagesService,
+    private errorReportService: ErrorReportService,
   ) { }
 
   ngOnInit(): void {
@@ -184,11 +186,9 @@ export class ImportStudentDataComponent implements OnInit {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify(studentDataArray)  
-            });         
+            });
 
-
-            if (response.status === 200 || response.status === 201) {           
-             
+            if (response.status === 200 || response.status === 201) {
               // Enviar el arreglo de estudiantes al backend
               const secondResponse = await fetch('http://localhost:3000/students/AddStudentsbyExcel', {
                 method: 'POST',
@@ -206,9 +206,17 @@ export class ImportStudentDataComponent implements OnInit {
                 this.messagesService.error('Error al procesar los datos. Por favor, inténtelo de nuevo.');
               }
             } else {
-              this.fileAnalyzed = false;
-              this.messagesService.error('Error al analizar los datos. Por favor, inténtelo de nuevo.');
-              console.log('la respuesta: ' + response.status);
+              const errorData = await response.json();          
+     
+              // Guardar los datos de error en el servicio
+              this.errorReportService.setErrorData(errorData);
+              
+              // Navegar al componente de reporte de errores
+              this.router.navigate(['/general/error-report-excel']);           
+            
+            
+            console.log('la respuesta: ' + response.status);
+            
             }
           } catch (error) {
             console.error('Error en las peticiones:', error);
@@ -257,8 +265,14 @@ export class ImportStudentDataComponent implements OnInit {
           body: JSON.stringify(formData)
         });
         
-        if (response.status === 200 || response.status === 201) {         
+        if (response.status === 200 || response.status === 201) {    
+          
           this.messagesService.success('Datos del excel registrados correctamente');
+          
+          // Guardar el archivo Excel en la carpeta "excel"
+          // if (this.selectedFile) {
+          //   this.saveExcelFile(this.selectedFile, formData.name);
+          // }
 
           if (action === 'create') {
             this.importForm.reset();
@@ -281,6 +295,10 @@ export class ImportStudentDataComponent implements OnInit {
         this.messagesService.error('Por favor, complete todos los campos requeridos.');
       }
     }
+  }
+
+  private saveExcelFile(file: File, fileName: string): void {
+  
   }
 
   navigateToList(): void {

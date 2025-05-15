@@ -59,56 +59,27 @@ export class ListStudentExcelComponent implements OnInit {
 
   async loadExcel() {
     try {
-      const response = await fetch('http://localhost:3000/excel');
-      if (response.status === 200) {
-        const data: Excel[] = await response.json();
-        this.excel = data;
-        // console.log('Students loaded:', this.students);
+      const response = await fetch('http://localhost:3000/Excel/getAllExcel');
+      if (response.status === 200) {       
+        const responseData = await response.json();
+        // Extraer el array de la propiedad 'data'
+        if (responseData && responseData.data && Array.isArray(responseData.data)) {
+          this.excel = responseData.data;
+      
+        } else {
+          console.error('Formato de respuesta inesperado:', responseData);
+          this.messagesService.error('Error: Formato de datos incorrecto');
+       
+        }
       } else {
-        // this.messagesService.error('Error al cargar los datos del excel');
-        this.loadMockData();
+        this.messagesService.error('Error al cargar los datos del excel');
+     
       }
-
     } catch (error) {
       console.error('Error al cargar estudiantes:', error);
+      this.messagesService.error('Error al conectar con el servidor');
+    
     }
-  }
-
-
-  loadMockData() {
-    console.log('Cargando datos de prueba');
-    this.excel = [
-      {
-        id: '1',
-        name: 'Listado de Estudiantes 2023',
-        modelType: 'Estudiantes',
-        description: 'Listado completo de estudiantes del curso 2023'
-      },
-      {
-        id: '2',
-        name: 'Matrícula Primer Año',
-        modelType: 'Matrícula',
-        description: 'Datos de matrícula de estudiantes de primer año'
-      },
-      {
-        id: '3',
-        name: 'Evaluaciones Finales',
-        modelType: 'Evaluaciones',
-        description: 'Registro de evaluaciones finales del semestre'
-      },
-      {
-        id: '4',
-        name: 'Asistencia Mensual',
-        modelType: 'Asistencia',
-        description: 'Control de asistencia mensual de todos los grupos'
-      },
-      {
-        id: '5',
-        name: 'Becados 2023',
-        modelType: 'Becas',
-        description: 'Listado de estudiantes con beca universitaria'
-      }
-    ];
   }
 
   navigateToAddStudent() {
