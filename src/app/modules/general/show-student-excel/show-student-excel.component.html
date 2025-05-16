@@ -49,7 +49,7 @@
           <div class="info-row">
             <div class="info-label">Modelo</div>
             <div class="info-value">
-              <button class="download-button">
+              <button class="download-button" (click)="downloadExcelById(excel.id, excel.name)">
                 <app-icon name="download"  class="icon"></app-icon>
                 Descargar
               </button>

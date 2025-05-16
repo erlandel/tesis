@@ -249,30 +249,24 @@ export class ImportStudentDataComponent implements OnInit {
     
     // Verificar que el formulario sea válido y que el archivo haya sido analizado
     if (this.importForm.valid && this.fileAnalyzed) {
-      // Crear objeto con los datos del formulario (sin el archivo)
-      const formData = {
-        name: this.importForm.get('name')?.value,
-        modelType: this.importForm.get('modelType')?.value,
-        description: this.importForm.get('description')?.value
-      };
-
+      // Crear un objeto FormData para enviar los datos y el archivo
+      const formData = new FormData();
+      formData.append('name', this.importForm.get('name')?.value);
+      formData.append('modelType', this.importForm.get('modelType')?.value);
+      formData.append('description', this.importForm.get('description')?.value);
+      if (this.selectedFile) {
+        formData.append('file', this.selectedFile);
+      }
+      console.log('Form data:', formData);
       try {
         const response = await fetch('http://localhost:3000/Excel/createExcel', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
+          body: formData
         });
         
         if (response.status === 200 || response.status === 201) {    
           
-          this.messagesService.success('Datos del excel registrados correctamente');
-          
-          // Guardar el archivo Excel en la carpeta "excel"
-          // if (this.selectedFile) {
-          //   this.saveExcelFile(this.selectedFile, formData.name);
-          // }
+          this.messagesService.success('Datos del excel registrados correctamente');    
 
           if (action === 'create') {
             this.importForm.reset();

@@ -60,7 +60,7 @@
                     <app-icon name="show" class="icon"></app-icon>
                     Mostrar
                   </button>                
-                  <button class="btn-show">
+                  <button class="btn-show" (click)="downloadExcelById(excel.id, excel.name)">
                     <app-icon name="download" class="icon"></app-icon>
                     Descargar
                   </button>

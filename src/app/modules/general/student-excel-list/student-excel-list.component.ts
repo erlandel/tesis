@@ -64,6 +64,7 @@ export class ListStudentExcelComponent implements OnInit {
         const responseData = await response.json();
         // Extraer el array de la propiedad 'data'
         if (responseData && responseData.data && Array.isArray(responseData.data)) {
+          console.log('Datos obtenidos:', responseData.data);
           this.excel = responseData.data;
       
         } else {
@@ -92,5 +93,29 @@ export class ListStudentExcelComponent implements OnInit {
 
 
 
+  downloadExcelById(id: string, name: string) {
+    const url = `http://localhost:3000/Excel/downloadExcel/${id}`;
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('No se pudo descargar el archivo');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = `${name}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+      })
+      .catch(error => {
+        console.error('Error al descargar el archivo:', error);
+        this.messagesService.error('Error al descargar el archivo');
+      });
+  }
 
 }
