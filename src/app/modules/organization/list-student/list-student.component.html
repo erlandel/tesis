@@ -13,22 +13,22 @@
     </div>
 
     <div class="button-header">
-      <button class="action-button" (click)="toggleFilterMenu()">
+      <button class="action-button" (click)="toggleFilterMenu($event)">
         <app-icon name="filter" class="icon"></app-icon>
         filtrar
         <app-icon name="collapseArrow" class="icon"></app-icon>
       </button>
 
       <div *ngIf="isFilterMenuVisible" class="filter-menu">
-        <label><input type="checkbox" /> Comisión</label>
-        <label><input type="checkbox" /> Apellidos</label>
-        <label><input type="checkbox" /> Nombre(s)</label>
-        <label><input type="checkbox" /> Carné de identidad</label>
-        <label><input type="checkbox" /> Índice</label>
-        <label><input type="checkbox" /> Preuniversitario</label>
-        <label><input type="checkbox" /> Provincia</label>
-        <label><input type="checkbox" /> Sexo</label>
-        <label><input type="checkbox" /> Vía de ingreso</label>
+        <label><input type="checkbox" [checked]="isFilterVisible.commission" (change)="toggleFilterVisibility('commission', $event)" /> Comisión</label>         
+        <label><input type="checkbox" [checked]="isFilterVisible.lastName" (change)="toggleFilterVisibility('lastName', $event)" /> Apellidos</label>
+        <label><input type="checkbox" [checked]="isFilterVisible.firstName" (change)="toggleFilterVisibility('firstName', $event)" /> Nombre(s)</label>
+        <label><input type="checkbox" [checked]="isFilterVisible.ciStudent" (change)="toggleFilterVisibility('ciStudent', $event)" /> Carné de identidad</label>
+        <label><input type="checkbox" [checked]="isFilterVisible.academicIndex" (change)="toggleFilterVisibility('academicIndex', $event)" /> Índice académico</label>
+        <label><input type="checkbox" [checked]="isFilterVisible.preUniversity" (change)="toggleFilterVisibility('preUniversity', $event)" /> Preuniversitario</label>
+        <label><input type="checkbox" [checked]="isFilterVisible.province" (change)="toggleFilterVisibility('province', $event)" /> Provincia</label>
+        <label><input type="checkbox" [checked]="isFilterVisible.gender" (change)="toggleFilterVisibility('gender', $event)" /> Sexo</label>
+        <label><input type="checkbox" [checked]="isFilterVisible.admissionMethod" (change)="toggleFilterVisibility('admissionMethod', $event)" /> Vía de ingreso</label>
       </div>
 
       <button class="action-button" (click)="navigateToAddStudent()">
@@ -37,42 +37,159 @@
       </button>
     </div>
   </header>
-<!-- 
-  <div class="container-filter">
-    <div>    
-        <label for="commission">Comisión</label>
-        <select id="commission" name="commission">
-          <option value="" selected></option>
-          <option value="comision-1">Comisión CIP LH(CIP - La Habana)</option>
-          <option value="comision-2">Comisión CIP LH(CIP - La Habana)</option>
-          <option value="comision-3">Comisión 3</option>
-        </select>
-        <div>
-        <select id="commission" name="commission">
-          <option value="" selected></option>
-          <option value="comision-1">Comisión CIP LH(CIP - La Habana)</option>
-          <option value="comision-2">Comisión CIP LH(CIP - La Habana)</option>
-          <option value="comision-3">Comisión 3</option>
-        </select>
-      </div>
-      <app-icon name="remove" class="icon"></app-icon>     
+
+  <div class="filter-form" *ngIf="isAnyFilterVisible()">
+    <div class="filter-form-container">
+        <div class="filter-row" *ngIf="isFilterVisible.commission">
+            <label for="commission1">Comisión</label>
+            <div class="select-container">
+                <select id="commission1">
+                    <option value=""></option>
+                    <option *ngFor="let commission of commissions" [value]="commission">{{ commission }}</option>
+                </select>    
+                <select id="commission2" *ngIf="showCommissionFilter">
+                    <option value=""></option>
+                    <option *ngFor="let commission of commissions" [value]="commission">{{ commission }}</option>
+                </select>                                        
+            </div>
+            <button class="clear-button" *ngIf="showCommissionFilter" (click)="toggleFilter('commission')">
+                <app-icon name="subtract" class="icon"></app-icon>
+            </button>                
+        </div>
+        
+        <div class="filter-row" *ngIf="isFilterVisible.lastName">
+            <label for="lastName1">Apellidos</label>
+            <div class="input-container">
+                <input type="text" id="lastName1">               
+                <input type="text" id="lastName2" *ngIf="showLastNameFilter">               
+            </div>
+            <button class="clear-button" *ngIf="showLastNameFilter" (click)="toggleFilter('lastName')">
+                <app-icon name="subtract" class="icon"></app-icon>
+            </button>   
+        </div>
+        
+        <div class="filter-row" *ngIf="isFilterVisible.firstName">
+            <label for="firstName1">Nombre(s)</label>
+            <div class="input-container">
+                <input type="text" id="firstName1">               
+                <input type="text" id="firstName2" *ngIf="showFirstNameFilter">               
+            </div>
+            <button class="clear-button" *ngIf="showFirstNameFilter" (click)="toggleFilter('firstName')">
+                <app-icon name="subtract" class="icon"></app-icon>
+            </button>   
+        </div>
+        
+        <div class="filter-row" *ngIf="isFilterVisible.ciStudent">
+            <label for="ciStudent1">Carné de identidad</label>
+            <div class="input-container">
+                <input type="text" id="ciStudent1">               
+                <input type="text" id="ciStudent2" *ngIf="showCiStudentFilter">               
+            </div>
+            <button class="clear-button" *ngIf="showCiStudentFilter" (click)="toggleFilter('ciStudent')">
+                <app-icon name="subtract" class="icon"></app-icon>
+            </button>   
+        </div>
+        
+        <div class="filter-row" *ngIf="isFilterVisible.academicIndex">
+            <label for="academicIndex1">Índice académico</label>
+            <div class="input-container">
+                <input type="text" id="academicIndex1">               
+                <input type="text" id="academicIndex2" *ngIf="showAcademicIndexFilter">               
+            </div>
+            <button class="clear-button" *ngIf="showAcademicIndexFilter" (click)="toggleFilter('academicIndex')">
+                <app-icon name="subtract" class="icon"></app-icon>
+            </button>   
+        </div>
+        
+        <div class="filter-row" *ngIf="isFilterVisible.preUniversity">
+            <label for="preUniversity1">Preuniversitario</label>
+            <div class="select-container">
+                <select id="preUniversity1">
+                    <option value=""></option>
+                    <option *ngFor="let preUniversity of preUniversities" [value]="preUniversity">{{ preUniversity }}</option>
+                </select>
+                <select id="preUniversity2" *ngIf="showPreUniversityFilter">
+                    <option value=""></option>
+                    <option *ngFor="let preUniversity of preUniversities" [value]="preUniversity">{{ preUniversity }}</option>
+                </select>                                    
+            </div>
+            <button class="clear-button" *ngIf="showPreUniversityFilter" (click)="toggleFilter('preUniversity')">
+                <app-icon name="subtract" class="icon"></app-icon>
+            </button>     
+        </div>
+        
+        <div class="filter-row" *ngIf="isFilterVisible.province">
+            <label for="province1">Provincia</label>
+            <div class="select-container">
+                <select id="province1">
+                    <option value=""></option>
+                    <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
+                </select>
+                <select id="province2" *ngIf="showProvinceFilter">
+                    <option value=""></option>
+                    <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
+                </select>                                    
+            </div>
+            <button class="clear-button" *ngIf="showProvinceFilter" (click)="toggleFilter('province')">
+                <app-icon name="subtract" class="icon"></app-icon>
+            </button>     
+        </div>
+        
+        <div class="filter-row" *ngIf="isFilterVisible.gender">
+            <label for="gender1">Sexo</label>
+            <div class="select-container">
+                <select id="gender1">
+                    <option value=""></option>
+                    <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+                </select>
+                <select id="gender2" *ngIf="showGenderFilter">
+                    <option value=""></option>
+                    <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+                </select>                                    
+            </div>
+            <button class="clear-button" *ngIf="showGenderFilter" (click)="toggleFilter('gender')">
+                <app-icon name="subtract" class="icon"></app-icon>
+            </button>     
+        </div>
+        
+        <div class="filter-row" *ngIf="isFilterVisible.admissionMethod">
+            <label for="admissionMethod1">Vía de ingreso</label>
+            <div class="select-container">
+                <select id="admissionMethod1">
+                    <option value=""></option>
+                    <option *ngFor="let method of admissionMethods" [value]="method">{{ method }}</option>
+                </select>
+                <select id="admissionMethod2" *ngIf="showAdmissionMethodFilter">
+                    <option value=""></option>
+                    <option *ngFor="let method of admissionMethods" [value]="method">{{ method }}</option>
+                </select>                                    
+            </div>
+            <button class="clear-button" *ngIf="showAdmissionMethodFilter" (click)="toggleFilter('admissionMethod')">
+                <app-icon name="subtract" class="icon"></app-icon>
+            </button>     
+        </div>
     </div>
 
     <div>
-      <div class="filter-buttons-container">
         <div class="filter-actions">
-          <button>
-            <app-icon name="filterWithe" class="icon"></app-icon>Filtrar</button>
-          <button>Restablecer</button>
+            <div class="buttons-row">
+                <button class="filter-button" (click)="aplicarFiltros()">
+                    <app-icon name="filterWithe" class="icon"></app-icon>
+                    Filtrar
+                </button>
+                <button class="reset-button" (click)="resetFilters()">Restablecer</button>
+            </div>
+            
+            <div class="advanced-filters" (click)="toggleAllFilters()">
+                <app-icon name="settings" class="icon"></app-icon>
+                Filtros avanzados
+            </div>
         </div>
-        <div class="advanced-filter">
-          <button>
-            <app-icon name="settings" class="icon"></app-icon>
-            Filtro avanzado</button>
-        </div>
-      </div>
     </div>
-  </div> -->
+</div>
+
+
+
 
   <div class="table-container">
     <table>
@@ -100,7 +217,7 @@
           <td>{{ student.preUniversity }}</td>
           <td>{{ student.province }}</td>
           <td>{{ student.gender }}</td>
-          <td>{{ student.skinColor }}</td>
+          <td>{{ student.admissionMethod }}</td>
           <td>
             <div class="btn-show-container">
               <button class="btn-show" (click)="showStudent(student.ciStudent)">
