@@ -26,35 +26,91 @@ export class ListStudentExcelComponent implements OnInit {
 
   excel: Excel[] = [];
 
-  // filterCriteria = {
-  //   commission: '',
-  //   lastName: '',
-  //   firstName: '',
-  //   idCard: '',
-  //   index: '',
-  //   preuniversity: '',
-  //   province: '',
-  //   municipality: '',
-  //   skinColor: '',
-  //   gender: '',
-  //   entryWay: '',
-  //   nationality: '',
-  //   careerRequest: '',
-  //   preselection: ''
-  // };
 
   isFilterMenuVisible: boolean = false;
+  
+  // Objeto para controlar la visibilidad de cada filtro
+  isFilterVisible = {
+    comision: false,
+    nombre: false,
+    tipoModelo: false,
+    usuario: false
+  };
+  
+  // Método para verificar si algún filtro está visible
+  isAnyFilterVisible(): boolean {
+    return this.isFilterVisible.comision || 
+           this.isFilterVisible.nombre || 
+           this.isFilterVisible.tipoModelo || 
+           this.isFilterVisible.usuario;
+  }
+  
+  // Método para activar/desactivar la visibilidad de un filtro específico
+  toggleFilterVisibility(filtro: string, event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    
+    switch(filtro) {
+      case 'comision':
+        this.isFilterVisible.comision = isChecked;
+        break;
+      case 'nombre':
+        this.isFilterVisible.nombre = isChecked;
+        break;
+      case 'tipoModelo':
+        this.isFilterVisible.tipoModelo = isChecked;
+        break;
+      case 'usuario':
+        this.isFilterVisible.usuario = isChecked;
+        break;
+    }
+  }
+  
+  // Propiedad para controlar los filtros avanzados
+  showAdvancedFilters = false;
 
 
 
+  // Propiedad para almacenar los datos originales
+  excelOriginal: Excel[] = [];
+  
   ngOnInit() {
     // Cuando el backend esté listo, descomentar esta línea
     this.loadExcel();
     console.log('Students loaded');
+    
+    // Agregar el event listener para detectar clics fuera del menú
+    document.addEventListener('click', this.handleOutsideClick.bind(this));
   }
-
-  toggleFilterMenu() {
+  
+  // Método para manejar clics fuera del menú
+  handleOutsideClick(event: MouseEvent): void {
+    const filterMenu = document.querySelector('.filter-menu');
+    const filterButton = document.querySelector('.action-button');
+    
+    // Si el menú está visible y el clic no fue ni en el menú ni en el botón
+    if (this.isFilterMenuVisible && 
+        filterMenu && !filterMenu.contains(event.target as Node) && 
+        filterButton && !filterButton.contains(event.target as Node)) {
+      this.isFilterMenuVisible = false;
+    }
+  }
+  
+  // No olvidar limpiar el event listener cuando se destruye el componente
+  ngOnDestroy(): void {
+    document.removeEventListener('click', this.handleOutsideClick.bind(this));
+  }
+  
+  toggleFilterMenu(event?: MouseEvent): void {
+    // Detener la propagación para evitar que el clic en el botón cierre inmediatamente el menú
+    if (event) {
+      event.stopPropagation();
+    }
     this.isFilterMenuVisible = !this.isFilterMenuVisible;
+  }
+  
+  // Método para alternar la visibilidad de los filtros avanzados
+  toggleAdvancedFilters(): void {
+    this.showAdvancedFilters = !this.showAdvancedFilters;
   }
 
   async loadExcel() {
@@ -66,20 +122,18 @@ export class ListStudentExcelComponent implements OnInit {
         if (responseData && responseData.data && Array.isArray(responseData.data)) {
           console.log('Datos obtenidos:', responseData.data);
           this.excel = responseData.data;
-      
+          // Guardar una copia de los datos originales
+          this.excelOriginal = [...responseData.data];
         } else {
           console.error('Formato de respuesta inesperado:', responseData);
           this.messagesService.error('Error: Formato de datos incorrecto');
-       
         }
       } else {
         this.messagesService.error('Error al cargar los datos del excel');
-     
       }
     } catch (error) {
       console.error('Error al cargar estudiantes:', error);
       this.messagesService.error('Error al conectar con el servidor');
-    
     }
   }
 
@@ -117,5 +171,127 @@ export class ListStudentExcelComponent implements OnInit {
         this.messagesService.error('Error al descargar el archivo');
       });
   }
+
+  // Propiedades individuales para cada filtro
+  showComisionFilter = false;
+  showNombreFilter = false;
+  showTipoModeloFilter = false;
+  showUsuarioFilter = false;
+
+  // Método para alternar un filtro específico
+  toggleFilter(filtro: string): void {
+    switch(filtro) {
+      case 'comision':
+        this.showComisionFilter = !this.showComisionFilter;
+        break;
+      case 'nombre':
+        this.showNombreFilter = !this.showNombreFilter;
+        break;
+      case 'tipoModelo':
+        this.showTipoModeloFilter = !this.showTipoModeloFilter;
+        break;
+      case 'usuario':
+        this.showUsuarioFilter = !this.showUsuarioFilter;
+        break;
+    }
+  }
+
+  // Método para alternar todos los filtros a la vez
+  toggleAllFilters(): void {
+    // Si todos están visibles, ocultar todos
+    if (this.showComisionFilter && this.showNombreFilter && 
+        this.showTipoModeloFilter && this.showUsuarioFilter) {
+      this.showComisionFilter = false;
+      this.showNombreFilter = false;
+      this.showTipoModeloFilter = false;
+      this.showUsuarioFilter = false;
+    } else {
+      // Si alguno está oculto, mostrar todos
+      this.showComisionFilter = true;
+      this.showNombreFilter = true;
+      this.showTipoModeloFilter = true;
+      this.showUsuarioFilter = true;
+    }
+  }
+
+  // Datos de ejemplo para los selects basados en la imagen
+  comisiones: string[] = ['Comision de ejemplo'];
+  tiposModelo: string[] = ['Registro académico', 'Registro de asistencia'];
+  usuarios: string[] = ['Usurio de ejemplo'];
+
+  // Método para restablecer todos los filtros
+  // Método para aplicar los filtros
+  aplicarFiltros(): void {
+    // Obtener los valores de los filtros
+    const comision1 = (document.getElementById('comision1') as HTMLSelectElement).value;
+    const comision2 = this.showComisionFilter ? (document.getElementById('comision2') as HTMLSelectElement).value : '';
+    
+    const nombre1 = (document.getElementById('nombre1') as HTMLInputElement).value.toLowerCase();
+    const nombre2 = this.showNombreFilter ? (document.getElementById('nombre2') as HTMLInputElement).value.toLowerCase() : '';
+    
+    const tipoModelo1 = (document.getElementById('tipo-modelo1') as HTMLSelectElement).value;
+    const tipoModelo2 = this.showTipoModeloFilter ? (document.getElementById('tipo-modelo2') as HTMLSelectElement).value : '';
+    
+    const usuario1 = (document.getElementById('usuario1') as HTMLSelectElement).value;
+    const usuario2 = this.showUsuarioFilter ? (document.getElementById('usuario2') as HTMLSelectElement).value : '';
+    
+    // Filtrar los datos
+    this.excel = this.excelOriginal.filter(item => {
+      // Comisión
+      const comisionMatch = 
+        (comision1 === '' || 'Comision de ejemplo'.includes(comision1)) &&
+        (comision2 === '' || 'Comision de ejemplo'.includes(comision2));
+      
+      // Nombre
+      const nombreMatch = 
+        (nombre1 === '' || item.name.toLowerCase().includes(nombre1)) &&
+        (nombre2 === '' || item.name.toLowerCase().includes(nombre2));
+      
+      // Tipo de modelo
+      const tipoModeloMatch = 
+        (tipoModelo1 === '' || item.modelType.includes(tipoModelo1)) &&
+        (tipoModelo2 === '' || item.modelType.includes(tipoModelo2));
+      
+      // Usuario
+      const usuarioMatch = 
+        (usuario1 === '' || 'Usurio de ejemplo'.includes(usuario1)) &&
+        (usuario2 === '' || 'Usurio de ejemplo'.includes(usuario2));
+      
+      // Devolver true solo si todos los filtros coinciden
+      return comisionMatch && nombreMatch && tipoModeloMatch && usuarioMatch;
+    });    
+  
+  }
+
+  // Modificar el método resetFilters para también restablecer la visibilidad de los filtros
+
+  resetFilters(): void {
+    // Limpiar los valores de los selects e inputs
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+      select.selectedIndex = 0;
+    });
+    
+    // Limpiar inputs
+    const inputs = document.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+      (input as HTMLInputElement).value = '';
+    });
+    
+    // Restaurar los datos originales si es necesario
+    this.excel = [...this.excelOriginal];
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
 
 }

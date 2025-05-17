@@ -6,7 +6,7 @@ import { Component, ElementRef, Input, AfterViewInit } from '@angular/core';
   standalone: true,
 })
 export class IconComponent implements AfterViewInit {
-  @Input() name: 'home' | 'analyze' | 'menu' | 'add' | 'save' | 'filter' | 'collapseArrow' | 'addUser' | 'show'| 'remove'| 'filterWithe'|'pencil'|'pencilWhite'|'delete'|'upadte'| 'back'| 'download'|'FillForm'|'settings' = 'home'; // Nombres de los iconos disponibles
+  @Input() name: 'home' | 'analyze' | 'menu' | 'add' | 'save' | 'filter' | 'collapseArrow' | 'addUser' | 'show'| 'remove'| 'filterWithe'|'pencil'|'pencilWhite'|'delete'|'upadte'| 'back'| 'subtract'| 'download'|'FillForm'|'settings' = 'home'; // Nombres de los iconos disponibles
 
   private icons: { [key: string]: string } = {
     home: `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
@@ -54,6 +54,7 @@ export class IconComponent implements AfterViewInit {
     download: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M5 20h14v-2H5zM19 9h-4V3H9v6H5l7 7z"/></svg>`,
     FillForm: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="m6.598 2.573l.694-.727l8.133 8.133q.479.479.479 1.156t-.479 1.156l-3.904 3.942q-.46.46-1.136.46q-.677 0-1.137-.46L5.344 12.29q-.479-.48-.479-1.156q0-.677.48-1.156L9.69 5.665zm3.806 3.806l-4.39 4.352q-.097.096-.125.202q-.03.106-.03.22h9.05q0-.114-.028-.22t-.125-.202zm8.173 11.313q-.633 0-1.066-.433q-.434-.434-.434-1.067q0-.448.236-.884t.495-.827q.186-.262.378-.51q.193-.248.391-.51q.198.262.39.51q.193.248.38.51q.259.39.494.827q.236.436.236.884q0 .633-.434 1.067q-.433.433-1.066.433M2 24v-2h20v2z"/></svg>`,
     back: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M4.4 7.4L6.8 4h2.5L7.2 7h6.3a6.5 6.5 0 0 1 0 13H9l1-2h3.5a4.5 4.5 0 1 0 0-9H7.2l2.1 3H6.8L4.4 8.6L4 8z"/></svg>`,
+    subtract: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 12 12"><path fill="#3e99e7" d="M1 6a5 5 0 1 1 10 0A5 5 0 0 1 1 6m3-.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1z"/></svg>`,
   };
 
   constructor(private el: ElementRef) { }

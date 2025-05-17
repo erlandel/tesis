@@ -13,17 +13,17 @@
         </div>
     
         <div class="button-header">
-          <button class="action-button" (click)="toggleFilterMenu()">
+          <button class="action-button" (click)="toggleFilterMenu($event)">
             <app-icon name="filter" class="icon"></app-icon>
             filtrar
             <app-icon name="collapseArrow" class="icon"></app-icon>
           </button>
     
           <div *ngIf="isFilterMenuVisible" class="filter-menu">
-            <label><input type="checkbox" /> Comisión</label>         
-            <label><input type="checkbox" /> Nombre</label>
-            <label><input type="checkbox" /> Tipo de modelo</label>
-            <label><input type="checkbox" /> Usuario</label>
+            <label><input type="checkbox" [checked]="isFilterVisible.comision" (change)="toggleFilterVisibility('comision', $event)" /> Comisión</label>         
+            <label><input type="checkbox" [checked]="isFilterVisible.nombre" (change)="toggleFilterVisibility('nombre', $event)" /> Nombre</label>
+            <label><input type="checkbox" [checked]="isFilterVisible.tipoModelo" (change)="toggleFilterVisibility('tipoModelo', $event)" /> Tipo de modelo</label>
+            <label><input type="checkbox" [checked]="isFilterVisible.usuario" (change)="toggleFilterVisibility('usuario', $event)" /> Usuario</label>
           </div>
     
           <button class="action-button" (click)="navigateToAddStudent()">
@@ -32,6 +32,90 @@
           </button>
         </div>
       </header>
+
+      <div class="filter-form" *ngIf="isAnyFilterVisible()">
+        <div class="filter-form-container">
+            <div class="filter-row" *ngIf="isFilterVisible.comision">
+                <label for="comision1">Comisión</label>
+                <div class="select-container">
+                    <select id="comision1">
+                        <option value=""></option>
+                        <option *ngFor="let comision of comisiones" [value]="comision">{{ comision }}</option>
+                    </select>    
+                    <select id="comision2" *ngIf="showComisionFilter">
+                        <option value=""></option>
+                        <option *ngFor="let comision of comisiones" [value]="comision">{{ comision }}</option>
+                    </select>                                        
+                </div>
+                <button class="clear-button" *ngIf="showComisionFilter" (click)="toggleFilter('comision')">
+                    <app-icon name="subtract" class="icon"></app-icon>
+                </button>                
+            </div>
+            
+            <div class="filter-row" *ngIf="isFilterVisible.nombre">
+                <label for="nombre1">Nombre</label>
+                <div class="input-container">
+                    <input type="text" id="nombre1">               
+                    <input type="text" id="nombre2" *ngIf="showNombreFilter">               
+                </div>
+                <button class="clear-button" *ngIf="showNombreFilter" (click)="toggleFilter('nombre')">
+                    <app-icon name="subtract" class="icon"></app-icon>
+                </button>   
+            </div>
+            
+            <div class="filter-row" *ngIf="isFilterVisible.tipoModelo">
+                <label for="tipo-modelo1">Tipo de modelo</label>
+                <div class="select-container">
+                    <select id="tipo-modelo1">
+                        <option value=""></option>
+                        <option *ngFor="let tipo of tiposModelo" [value]="tipo">{{ tipo }}</option>
+                    </select> 
+                    <select id="tipo-modelo2" *ngIf="showTipoModeloFilter">
+                        <option value=""></option>
+                        <option *ngFor="let tipo of tiposModelo" [value]="tipo">{{ tipo }}</option>
+                    </select>                
+                </div>
+                <button class="clear-button" *ngIf="showTipoModeloFilter" (click)="toggleFilter('tipoModelo')">
+                    <app-icon name="subtract" class="icon"></app-icon>
+                </button>   
+            </div>
+            
+            <div class="filter-row" *ngIf="isFilterVisible.usuario">
+                <label for="usuario1">Usuario</label>
+                <div class="select-container">
+                    <select id="usuario1">
+                        <option value=""></option>
+                        <option *ngFor="let usuario of usuarios" [value]="usuario">{{ usuario }}</option>
+                    </select>
+                    <select id="usuario2" *ngIf="showUsuarioFilter">
+                        <option value=""></option>
+                        <option *ngFor="let usuario of usuarios" [value]="usuario">{{ usuario }}</option>
+                    </select>                                    
+                </div>
+                <button class="clear-button" *ngIf="showUsuarioFilter" (click)="toggleFilter('usuario')">
+                    <app-icon name="subtract" class="icon"></app-icon>
+                </button>     
+            </div>
+        </div>
+    
+        <div>
+            <div class="filter-actions">
+                <div class="buttons-row">
+                    <button class="filter-button" (click)="aplicarFiltros()">
+                        <app-icon name="filterWithe" class="icon"></app-icon>
+                        Filtrar
+                    </button>
+                    <button class="reset-button" (click)="resetFilters()">Restablecer</button>
+                </div>
+                
+                <div class="advanced-filters" (click)="toggleAllFilters()">
+                    <app-icon name="settings" class="icon"></app-icon>
+                    Filtros avanzados
+                </div>
+            </div>
+        </div>
+   
+    </div>
 
 
 

@@ -123,4 +123,124 @@
     }
   }
 
-}  
+
+  // Nuevos estilos para el formulario de filtros
+  .filter-form {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-top: 2px solid #3e99e7;
+}
+
+.filter-form-container {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    flex: 1; /* Permite que el elemento crezca y ocupe el espacio disponible */
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    
+    label {
+        width: 150px;
+        text-align: right;
+        padding-right: 15px;
+        font-weight: normal;
+        color: #333;
+    }
+}
+
+.select-container, .input-container {
+    display: flex;
+    flex: 1;
+    position: relative;
+    gap: 10px;
+    
+    select, input {
+        flex: 1;
+        padding: 6px 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+        height: 34px;
+    }
+}
+
+.clear-button {     
+    top: 50%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    // .icon {
+    //     width: 14px;
+    //     height: 14px;
+    // }
+}
+
+.filter-actions {
+    // margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos horizontalmente */
+    margin-left: 3rem;
+    // gap: 10px; /* Espacio entre los elementos */
+}
+
+.buttons-row {
+    display: flex;
+    flex-direction: row; /* Coloca los botones uno al lado del otro */
+    gap: 5px; /* Espacio entre los botones */
+    // width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    justify-content: center; /* Centra los botones horizontalmente */
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3e99e7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    cursor: pointer;
+   
+}
+
+.reset-button {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 15px;
+    cursor: pointer;
+    color: #333;
+    text-align: center; /* Centra el texto */
+}
+
+.advanced-filters {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    color: #3e99e7;
+    cursor: pointer;
+    margin-top: 10px; /* Espacio adicional arriba */
+    
+    .icon {
+        margin-right: 5px;
+        color: #3e99e7;
+    }
+}
+}
+
+
+ 
