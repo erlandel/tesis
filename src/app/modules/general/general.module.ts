@@ -8,7 +8,6 @@ import { IconComponent } from 'src/icons/icon.component';
 import { ListStudentExcelComponent } from './student-excel-list/student-excel-list.component';
 import { ShowStudentExcelComponent } from './show-student-excel/show-student-excel.component';
 import { ErrorReportExcelComponent } from './error-report-excel/error-report-excel.component';
-import { FiltrarComponent } from './filtrar/filtrar.component';
 
 
 const routes: Routes = [
@@ -32,10 +31,7 @@ const routes: Routes = [
     path: 'error-report-excel',
     component: ErrorReportExcelComponent,
   },
-  {
-    path: 'filtrar',
-    component: FiltrarComponent,
-  }
+
 ];
 
 @NgModule({

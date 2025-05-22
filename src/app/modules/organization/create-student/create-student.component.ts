@@ -102,6 +102,7 @@ export class CreateStudentComponent implements OnInit {
 
   // Función para manejar el submit del formulario
   async onSubmit(action: string = 'create'): Promise<void> {
+    console.log(this.studentForm.value)
     if (this.studentForm.valid) {
       const formData = this.studentForm.getRawValue();
       try {
@@ -112,6 +113,7 @@ export class CreateStudentComponent implements OnInit {
           },
           body: JSON.stringify(formData)
         });
+        console.log(response.status);
         if (response.status === 200) {
           this.messagesService.success('Estudiante registrado correctamente');
 
@@ -122,6 +124,8 @@ export class CreateStudentComponent implements OnInit {
           if (action === 'create-list') {
             this.router.navigate(['/organization/list-student']);
           }
+        } else if (response.status === 400) {
+          this.messagesService.error('Estudiante ya existe');
         } else {
           this.messagesService.error('Error al registrar el estudiante');
         }

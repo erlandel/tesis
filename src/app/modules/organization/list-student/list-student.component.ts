@@ -65,10 +65,10 @@ export class ListStudentComponent implements OnInit {
   
   // Datos para los selectores
   commissions: string[] = ['Comisión 1', 'Comisión 2', 'Comisión 3'];
-  preUniversities: string[] = ['IPVCE', 'IPUEC', 'Otro'];
-  provinces: string[] = ['La Habana', 'Matanzas', 'Villa Clara', 'Cienfuegos', 'Sancti Spíritus'];
+  preUniversities: string[] = ['Preuniversitario 1', 'Preuniversitario 2', 'Preuniversitario 3'];
+  provinces: string[] = ['La Habana', 'Matanzas', 'Villa Clara', 'Cienfuegos', 'Sancti Spíritus','Santiago'];
   genders: string[] = ['Masculino', 'Femenino'];
-  admissionMethods: string[] = ['Concurso', 'Orden 18', 'Extranjero'];
+  admissionMethods: string[] = ['metodo 1', 'metodo 2', 'metodo 3'];
   
   // Propiedad para controlar los filtros avanzados
   showAdvancedFilters = false;
@@ -127,86 +127,104 @@ export class ListStudentComponent implements OnInit {
   }
 
   aplicarFiltros(): void {
+    console.log('Aplicando filtros...');
+    
     // Obtener los valores de los filtros
-    const commission1 = (document.getElementById('commission1') as HTMLSelectElement).value;
-    const commission2 = this.showCommissionFilter ? (document.getElementById('commission2') as HTMLSelectElement).value : '';
+    const commission1 = (document.getElementById('commission1') as HTMLSelectElement)?.value || '';
+    const commission2 = this.showCommissionFilter ? (document.getElementById('commission2') as HTMLSelectElement)?.value || '' : '';
     
-    const lastName1 = (document.getElementById('lastName1') as HTMLInputElement).value.toLowerCase();
-    const lastName2 = this.showLastNameFilter ? (document.getElementById('lastName2') as HTMLInputElement).value.toLowerCase() : '';
+    const lastName1 = (document.getElementById('lastName1') as HTMLInputElement)?.value?.toLowerCase() || '';
+    const lastName2 = this.showLastNameFilter ? (document.getElementById('lastName2') as HTMLInputElement)?.value?.toLowerCase() || '' : '';
     
-    const firstName1 = (document.getElementById('firstName1') as HTMLInputElement).value.toLowerCase();
-    const firstName2 = this.showFirstNameFilter ? (document.getElementById('firstName2') as HTMLInputElement).value.toLowerCase() : '';
+    const firstName1 = (document.getElementById('firstName1') as HTMLInputElement)?.value?.toLowerCase() || '';
+    const firstName2 = this.showFirstNameFilter ? (document.getElementById('firstName2') as HTMLInputElement)?.value?.toLowerCase() || '' : '';
     
-    const ciStudent1 = (document.getElementById('ciStudent1') as HTMLInputElement).value;
-    const ciStudent2 = this.showCiStudentFilter ? (document.getElementById('ciStudent2') as HTMLInputElement).value : '';
+    const ciStudent1 = (document.getElementById('ciStudent1') as HTMLInputElement)?.value || '';
+    const ciStudent2 = this.showCiStudentFilter ? (document.getElementById('ciStudent2') as HTMLInputElement)?.value || '' : '';
     
-    const academicIndex1 = (document.getElementById('academicIndex1') as HTMLInputElement).value;
-    const academicIndex2 = this.showAcademicIndexFilter ? (document.getElementById('academicIndex2') as HTMLInputElement).value : '';
+    const academicIndex1 = (document.getElementById('academicIndex1') as HTMLInputElement)?.value || '';
+    const academicIndex2 = this.showAcademicIndexFilter ? (document.getElementById('academicIndex2') as HTMLInputElement)?.value || '' : '';
     
-    const preUniversity1 = (document.getElementById('preUniversity1') as HTMLSelectElement).value;
-    const preUniversity2 = this.showPreUniversityFilter ? (document.getElementById('preUniversity2') as HTMLSelectElement).value : '';
+    const preUniversity1 = (document.getElementById('preUniversity1') as HTMLSelectElement)?.value || '';
+    const preUniversity2 = this.showPreUniversityFilter ? (document.getElementById('preUniversity2') as HTMLSelectElement)?.value || '' : '';
     
-    const province1 = (document.getElementById('province1') as HTMLSelectElement).value;
-    const province2 = this.showProvinceFilter ? (document.getElementById('province2') as HTMLSelectElement).value : '';
+    const province1 = (document.getElementById('province1') as HTMLSelectElement)?.value || '';
+    const province2 = this.showProvinceFilter ? (document.getElementById('province2') as HTMLSelectElement)?.value || '' : '';
     
-    const gender1 = (document.getElementById('gender1') as HTMLSelectElement).value;
-    const gender2 = this.showGenderFilter ? (document.getElementById('gender2') as HTMLSelectElement).value : '';
+    const gender1 = (document.getElementById('gender1') as HTMLSelectElement)?.value || '';
+    const gender2 = this.showGenderFilter ? (document.getElementById('gender2') as HTMLSelectElement)?.value || '' : '';
     
-    const admissionMethod1 = (document.getElementById('admissionMethod1') as HTMLSelectElement).value;
-    const admissionMethod2 = this.showAdmissionMethodFilter ? (document.getElementById('admissionMethod2') as HTMLSelectElement).value : '';
+    const admissionMethod1 = (document.getElementById('admissionMethod1') as HTMLSelectElement)?.value || '';
+    const admissionMethod2 = this.showAdmissionMethodFilter ? (document.getElementById('admissionMethod2') as HTMLSelectElement)?.value || '' : '';
+    
+    console.log('Valores de filtros:', { commission1, commission2, lastName1, lastName2, firstName1, firstName2, ciStudent1, ciStudent2, academicIndex1, academicIndex2, preUniversity1, preUniversity2, province1, province2, gender1, gender2, admissionMethod1, admissionMethod2 });
+    console.log('Datos originales:', this.estudentOriginal);
     
     // Filtrar los datos
     this.students = this.estudentOriginal.filter(item => {
-      // Comisión
+      // Verificar que item no sea null o undefined
+      if (!item) {
+        console.log('Item es null o undefined');
+        return false;
+      }
+      
+      console.log('Filtrando item:', item);
+      
+      // Comisión - Verificar si existe la propiedad commission o usar un valor por defecto
+      const commissionValue = 'Comision de ejemplo'; // Reemplazar con item.commission cuando esté disponible
       const commissionMatch = 
-        (commission1 === '' || 'Comision de ejemplo'.includes(commission1)) &&
-        (commission2 === '' || 'Comision de ejemplo'.includes(commission2));
+        (commission1 === '' || commissionValue.toLowerCase().includes(commission1.toLowerCase())) &&
+        (commission2 === '' || commissionValue.toLowerCase().includes(commission2.toLowerCase()));
       
       // Apellidos
       const lastNameMatch = 
-        (lastName1 === '' || item.lastName.toLowerCase().includes(lastName1)) &&
-        (lastName2 === '' || item.lastName.toLowerCase().includes(lastName2));
+        (lastName1 === '' || (item.lastName && item.lastName.toLowerCase().includes(lastName1))) &&
+        (lastName2 === '' || (item.lastName && item.lastName.toLowerCase().includes(lastName2)));
       
       // Nombre
       const firstNameMatch = 
-        (firstName1 === '' || item.firstName.toLowerCase().includes(firstName1)) &&
-        (firstName2 === '' || item.firstName.toLowerCase().includes(firstName2));
+        (firstName1 === '' || (item.firstName && item.firstName.toLowerCase().includes(firstName1))) &&
+        (firstName2 === '' || (item.firstName && item.firstName.toLowerCase().includes(firstName2)));
       
       // Carné de identidad
       const ciStudentMatch = 
-        (ciStudent1 === '' || item.ciStudent.includes(ciStudent1)) &&
-        (ciStudent2 === '' || item.ciStudent.includes(ciStudent2));
+        (ciStudent1 === '' || (item.ciStudent && item.ciStudent.includes(ciStudent1))) &&
+        (ciStudent2 === '' || (item.ciStudent && item.ciStudent.includes(ciStudent2)));
       
       // Índice académico
       const academicIndexMatch = 
-        (academicIndex1 === '' || (item.academicIndex?.includes(academicIndex1) ?? false)) &&
-        (academicIndex2 === '' || (item.academicIndex?.includes(academicIndex2) ?? false));
+        (academicIndex1 === '' || (item.academicIndex && item.academicIndex.includes(academicIndex1))) &&
+        (academicIndex2 === '' || (item.academicIndex && item.academicIndex.includes(academicIndex2)));
       
       // Preuniversitario
       const preUniversityMatch = 
-        (preUniversity1 === '' || item.preUniversity.includes(preUniversity1)) &&
-        (preUniversity2 === '' || item.preUniversity.includes(preUniversity2));
+        (preUniversity1 === '' || (item.preUniversity && item.preUniversity.includes(preUniversity1))) &&
+        (preUniversity2 === '' || (item.preUniversity && item.preUniversity.includes(preUniversity2)));
       
       // Provincia
       const provinceMatch = 
-        (province1 === '' || item.province.includes(province1)) &&
-        (province2 === '' || item.province.includes(province2));
+        (province1 === '' || (item.province && item.province.includes(province1))) &&
+        (province2 === '' || (item.province && item.province.includes(province2)));
       
       // Sexo
       const genderMatch = 
-        (gender1 === '' || item.gender.includes(gender1)) &&
-        (gender2 === '' || item.gender.includes(gender2));
+        (gender1 === '' || (item.gender && item.gender.includes(gender1))) &&
+        (gender2 === '' || (item.gender && item.gender.includes(gender2)));
       
       // Vía de ingreso
       const admissionMethodMatch = 
-        (admissionMethod1 === '' || item.admissionMethod.includes(admissionMethod1)) &&
-        (admissionMethod2 === '' || item.admissionMethod.includes(admissionMethod2));
+        (admissionMethod1 === '' || (item.admissionMethod && item.admissionMethod.includes(admissionMethod1))) &&
+        (admissionMethod2 === '' || (item.admissionMethod && item.admissionMethod.includes(admissionMethod2)));
+      
+      console.log('Resultados de coincidencia:', { commissionMatch, lastNameMatch, firstNameMatch, ciStudentMatch, academicIndexMatch, preUniversityMatch, provinceMatch, genderMatch, admissionMethodMatch });
       
       // Devolver true solo si todos los filtros coinciden
       return commissionMatch && lastNameMatch && firstNameMatch && ciStudentMatch && 
              academicIndexMatch && preUniversityMatch && provinceMatch && 
              genderMatch && admissionMethodMatch;
     });
+    
+    console.log('Datos filtrados:', this.students);
   }
 
   resetFilters(): void {

@@ -216,51 +216,69 @@ export class ListStudentExcelComponent implements OnInit {
 
   // Datos de ejemplo para los selects basados en la imagen
   comisiones: string[] = ['Comision de ejemplo'];
-  tiposModelo: string[] = ['Registro académico', 'Registro de asistencia'];
+  tiposModelo: string[] = ['Registro académico', 'Registro de asistencia','Datos de matrícula', 'Calificaciones'];
   usuarios: string[] = ['Usurio de ejemplo'];
 
   // Método para restablecer todos los filtros
   // Método para aplicar los filtros
   aplicarFiltros(): void {
+    console.log('Aplicando filtros...');
+    
     // Obtener los valores de los filtros
-    const comision1 = (document.getElementById('comision1') as HTMLSelectElement).value;
-    const comision2 = this.showComisionFilter ? (document.getElementById('comision2') as HTMLSelectElement).value : '';
+    const comision1 = (document.getElementById('comision1') as HTMLSelectElement)?.value || '';
+    const comision2 = this.showComisionFilter ? (document.getElementById('comision2') as HTMLSelectElement)?.value || '' : '';
     
-    const nombre1 = (document.getElementById('nombre1') as HTMLInputElement).value.toLowerCase();
-    const nombre2 = this.showNombreFilter ? (document.getElementById('nombre2') as HTMLInputElement).value.toLowerCase() : '';
+    const nombre1 = (document.getElementById('nombre1') as HTMLInputElement)?.value?.toLowerCase() || '';
+    const nombre2 = this.showNombreFilter ? (document.getElementById('nombre2') as HTMLInputElement)?.value?.toLowerCase() || '' : '';
     
-    const tipoModelo1 = (document.getElementById('tipo-modelo1') as HTMLSelectElement).value;
-    const tipoModelo2 = this.showTipoModeloFilter ? (document.getElementById('tipo-modelo2') as HTMLSelectElement).value : '';
+    const tipoModelo1 = (document.getElementById('tipo-modelo1') as HTMLSelectElement)?.value || '';
+    const tipoModelo2 = this.showTipoModeloFilter ? (document.getElementById('tipo-modelo2') as HTMLSelectElement)?.value || '' : '';
     
-    const usuario1 = (document.getElementById('usuario1') as HTMLSelectElement).value;
-    const usuario2 = this.showUsuarioFilter ? (document.getElementById('usuario2') as HTMLSelectElement).value : '';
+    const usuario1 = (document.getElementById('usuario1') as HTMLSelectElement)?.value || '';
+    const usuario2 = this.showUsuarioFilter ? (document.getElementById('usuario2') as HTMLSelectElement)?.value || '' : '';
+    
+    console.log('Valores de filtros:', { comision1, comision2, nombre1, nombre2, tipoModelo1, tipoModelo2, usuario1, usuario2 });
+    console.log('Datos originales:', this.excelOriginal);
     
     // Filtrar los datos
     this.excel = this.excelOriginal.filter(item => {
-      // Comisión
+      // Verificar que item no sea null o undefined
+      if (!item) {
+        console.log('Item es null o undefined');
+        return false;
+      }
+      
+      console.log('Filtrando item:', item);
+      
+      // Comisión - Verificar si existe la propiedad commission o usar un valor por defecto
+      const comisionValue =  'Comision de ejemplo'; 
       const comisionMatch = 
-        (comision1 === '' || 'Comision de ejemplo'.includes(comision1)) &&
-        (comision2 === '' || 'Comision de ejemplo'.includes(comision2));
+        (comision1 === '' || comisionValue.toLowerCase().includes(comision1.toLowerCase())) &&
+        (comision2 === '' || comisionValue.toLowerCase().includes(comision2.toLowerCase()));
       
-      // Nombre
+      // Nombre - Verificar que item.name exista
       const nombreMatch = 
-        (nombre1 === '' || item.name.toLowerCase().includes(nombre1)) &&
-        (nombre2 === '' || item.name.toLowerCase().includes(nombre2));
+        (nombre1 === '' || (item.name && item.name.toLowerCase().includes(nombre1))) &&
+        (nombre2 === '' || (item.name && item.name.toLowerCase().includes(nombre2)));
       
-      // Tipo de modelo
+      // Tipo de modelo - Verificar que item.modelType exista
       const tipoModeloMatch = 
-        (tipoModelo1 === '' || item.modelType.includes(tipoModelo1)) &&
-        (tipoModelo2 === '' || item.modelType.includes(tipoModelo2));
+        (tipoModelo1 === '' || (item.modelType && item.modelType.toLowerCase().includes(tipoModelo1.toLowerCase()))) &&
+        (tipoModelo2 === '' || (item.modelType && item.modelType.toLowerCase().includes(tipoModelo2.toLowerCase())));
       
-      // Usuario
+      // Usuario - Verificar si existe la propiedad user o usar un valor por defecto
+      const usuarioValue = 'Usuario de ejemplo';
       const usuarioMatch = 
-        (usuario1 === '' || 'Usurio de ejemplo'.includes(usuario1)) &&
-        (usuario2 === '' || 'Usurio de ejemplo'.includes(usuario2));
+        (usuario1 === '' || usuarioValue.toLowerCase().includes(usuario1.toLowerCase())) &&
+        (usuario2 === '' || usuarioValue.toLowerCase().includes(usuario2.toLowerCase()));
+      
+      console.log('Resultados de coincidencia:', { comisionMatch, nombreMatch, tipoModeloMatch, usuarioMatch });
       
       // Devolver true solo si todos los filtros coinciden
       return comisionMatch && nombreMatch && tipoModeloMatch && usuarioMatch;
-    });    
-  
+    });
+    
+    console.log('Datos filtrados:', this.excel);
   }
 
   // Modificar el método resetFilters para también restablecer la visibilidad de los filtros

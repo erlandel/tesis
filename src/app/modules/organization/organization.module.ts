@@ -8,7 +8,7 @@ import { ListStudentComponent } from './list-student/list-student.component';
 import { ShowStudentComponent } from './show-student/show-student.component';
 import { IconComponent } from 'src/icons/icon.component';
 import { EditStudentComponent } from './edit-student/edit-student.component';
-import { FiltrarComponent } from '../general/filtrar/filtrar.component';
+
 // import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
@@ -33,10 +33,6 @@ const routes: Routes = [
   {
     path: 'edit-student/:ciStudent',
     component: EditStudentComponent,
-  },
-  {
-    path: 'filtrar',
-    component: FiltrarComponent,
   },
 
 ];

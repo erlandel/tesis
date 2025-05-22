@@ -291,9 +291,6 @@ export class ImportStudentDataComponent implements OnInit {
     }
   }
 
-  private saveExcelFile(file: File, fileName: string): void {
-  
-  }
 
   navigateToList(): void {
     this.router.navigate(['/general/student-excel-list']);
