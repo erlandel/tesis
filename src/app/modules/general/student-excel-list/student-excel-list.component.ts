@@ -221,7 +221,7 @@ export class ListStudentExcelComponent implements OnInit {
 
   // Método para restablecer todos los filtros
   // Método para aplicar los filtros
-  aplicarFiltros(): void {
+  applyFilters(): void {
     console.log('Aplicando filtros...');
     
     // Obtener los valores de los filtros
@@ -251,30 +251,35 @@ export class ListStudentExcelComponent implements OnInit {
       console.log('Filtrando item:', item);
       
       // Comisión - Verificar si existe la propiedad commission o usar un valor por defecto
-      const comisionValue =  'Comision de ejemplo'; 
+      const comisionValue = 'Comision de ejemplo'; 
+      // Comisión: el item pasa si coincide con el primer filtro O con el segundo filtro
       const comisionMatch = 
-        (comision1 === '' || comisionValue.toLowerCase().includes(comision1.toLowerCase())) &&
-        (comision2 === '' || comisionValue.toLowerCase().includes(comision2.toLowerCase()));
+        (comision1 === '' || comisionValue.toLowerCase().includes(comision1.toLowerCase())) ||
+        (comision2 !== '' && comisionValue.toLowerCase().includes(comision2.toLowerCase()));
       
       // Nombre - Verificar que item.name exista
+      // Nombre: el item pasa si coincide con el primer filtro O con el segundo filtro
       const nombreMatch = 
-        (nombre1 === '' || (item.name && item.name.toLowerCase().includes(nombre1))) &&
-        (nombre2 === '' || (item.name && item.name.toLowerCase().includes(nombre2)));
+        (nombre1 === '' || (item.name && item.name.toLowerCase().includes(nombre1))) ||
+        (nombre2 !== '' && item.name && item.name.toLowerCase().includes(nombre2));
       
       // Tipo de modelo - Verificar que item.modelType exista
+      // Tipo de modelo: el item pasa si coincide con el primer filtro O con el segundo filtro
       const tipoModeloMatch = 
-        (tipoModelo1 === '' || (item.modelType && item.modelType.toLowerCase().includes(tipoModelo1.toLowerCase()))) &&
-        (tipoModelo2 === '' || (item.modelType && item.modelType.toLowerCase().includes(tipoModelo2.toLowerCase())));
+        (tipoModelo1 === '' || (item.modelType && item.modelType.toLowerCase().includes(tipoModelo1.toLowerCase()))) ||
+        (tipoModelo2 !== '' && item.modelType && item.modelType.toLowerCase().includes(tipoModelo2.toLowerCase()));
       
       // Usuario - Verificar si existe la propiedad user o usar un valor por defecto
       const usuarioValue = 'Usuario de ejemplo';
+      // Usuario: el item pasa si coincide con el primer filtro O con el segundo filtro
       const usuarioMatch = 
-        (usuario1 === '' || usuarioValue.toLowerCase().includes(usuario1.toLowerCase())) &&
-        (usuario2 === '' || usuarioValue.toLowerCase().includes(usuario2.toLowerCase()));
+        (usuario1 === '' || usuarioValue.toLowerCase().includes(usuario1.toLowerCase())) ||
+        (usuario2 !== '' && usuarioValue.toLowerCase().includes(usuario2.toLowerCase()));
       
       console.log('Resultados de coincidencia:', { comisionMatch, nombreMatch, tipoModeloMatch, usuarioMatch });
       
-      // Devolver true solo si todos los filtros coinciden
+      // Devolver true solo si TODOS los tipos de filtros coinciden
+      // Pero dentro de cada tipo, basta con que coincida con el primer O el segundo filtro
       return comisionMatch && nombreMatch && tipoModeloMatch && usuarioMatch;
     });
     

@@ -126,7 +126,7 @@ export class ListStudentComponent implements OnInit {
     return Object.values(this.isFilterVisible).some(value => value);
   }
 
-  aplicarFiltros(): void {
+  applyFilters(): void {
     console.log('Aplicando filtros...');
     
     // Obtener los valores de los filtros
@@ -172,53 +172,63 @@ export class ListStudentComponent implements OnInit {
       
       // Comisión - Verificar si existe la propiedad commission o usar un valor por defecto
       const commissionValue = 'Comision de ejemplo'; // Reemplazar con item.commission cuando esté disponible
+      // Comisión: el item pasa si coincide con el primer filtro O con el segundo filtro
       const commissionMatch = 
-        (commission1 === '' || commissionValue.toLowerCase().includes(commission1.toLowerCase())) &&
-        (commission2 === '' || commissionValue.toLowerCase().includes(commission2.toLowerCase()));
+        (commission1 === '' || commissionValue.toLowerCase().includes(commission1.toLowerCase())) ||
+        (commission2 !== '' && commissionValue.toLowerCase().includes(commission2.toLowerCase()));
       
       // Apellidos
+      // Apellidos: el item pasa si coincide con el primer filtro O con el segundo filtro
       const lastNameMatch = 
-        (lastName1 === '' || (item.lastName && item.lastName.toLowerCase().includes(lastName1))) &&
-        (lastName2 === '' || (item.lastName && item.lastName.toLowerCase().includes(lastName2)));
+        (lastName1 === '' || (item.lastName && item.lastName.toLowerCase().includes(lastName1))) ||
+        (lastName2 !== '' && item.lastName && item.lastName.toLowerCase().includes(lastName2));
       
       // Nombre
+      // Nombre: el item pasa si coincide con el primer filtro O con el segundo filtro
       const firstNameMatch = 
-        (firstName1 === '' || (item.firstName && item.firstName.toLowerCase().includes(firstName1))) &&
-        (firstName2 === '' || (item.firstName && item.firstName.toLowerCase().includes(firstName2)));
+        (firstName1 === '' || (item.firstName && item.firstName.toLowerCase().includes(firstName1))) ||
+        (firstName2 !== '' && item.firstName && item.firstName.toLowerCase().includes(firstName2));
       
       // Carné de identidad
+      // Carné: el item pasa si coincide con el primer filtro O con el segundo filtro
       const ciStudentMatch = 
-        (ciStudent1 === '' || (item.ciStudent && item.ciStudent.includes(ciStudent1))) &&
-        (ciStudent2 === '' || (item.ciStudent && item.ciStudent.includes(ciStudent2)));
+        (ciStudent1 === '' || (item.ciStudent && item.ciStudent.includes(ciStudent1))) ||
+        (ciStudent2 !== '' && item.ciStudent && item.ciStudent.includes(ciStudent2));
       
       // Índice académico
+      // Índice: el item pasa si coincide con el primer filtro O con el segundo filtro
       const academicIndexMatch = 
-        (academicIndex1 === '' || (item.academicIndex && item.academicIndex.includes(academicIndex1))) &&
-        (academicIndex2 === '' || (item.academicIndex && item.academicIndex.includes(academicIndex2)));
+        (academicIndex1 === '' || (item.academicIndex && item.academicIndex.includes(academicIndex1))) ||
+        (academicIndex2 !== '' && item.academicIndex && item.academicIndex.includes(academicIndex2));
       
       // Preuniversitario
+      // Preuniversitario: el item pasa si coincide con el primer filtro O con el segundo filtro
       const preUniversityMatch = 
-        (preUniversity1 === '' || (item.preUniversity && item.preUniversity.includes(preUniversity1))) &&
-        (preUniversity2 === '' || (item.preUniversity && item.preUniversity.includes(preUniversity2)));
+        (preUniversity1 === '' || (item.preUniversity && item.preUniversity.includes(preUniversity1))) ||
+        (preUniversity2 !== '' && item.preUniversity && item.preUniversity.includes(preUniversity2));
       
       // Provincia
+      // Provincia: el item pasa si coincide con el primer filtro O con el segundo filtro
       const provinceMatch = 
-        (province1 === '' || (item.province && item.province.includes(province1))) &&
-        (province2 === '' || (item.province && item.province.includes(province2)));
+        (province1 === '' || (item.province && item.province.includes(province1))) ||
+        (province2 !== '' && item.province && item.province.includes(province2));
       
       // Sexo
+      // Sexo: el item pasa si coincide con el primer filtro O con el segundo filtro
       const genderMatch = 
-        (gender1 === '' || (item.gender && item.gender.includes(gender1))) &&
-        (gender2 === '' || (item.gender && item.gender.includes(gender2)));
+        (gender1 === '' || (item.gender && item.gender.includes(gender1))) ||
+        (gender2 !== '' && item.gender && item.gender.includes(gender2));
       
       // Vía de ingreso
+      // Vía de ingreso: el item pasa si coincide con el primer filtro O con el segundo filtro
       const admissionMethodMatch = 
-        (admissionMethod1 === '' || (item.admissionMethod && item.admissionMethod.includes(admissionMethod1))) &&
-        (admissionMethod2 === '' || (item.admissionMethod && item.admissionMethod.includes(admissionMethod2)));
+        (admissionMethod1 === '' || (item.admissionMethod && item.admissionMethod.includes(admissionMethod1))) ||
+        (admissionMethod2 !== '' && item.admissionMethod && item.admissionMethod.includes(admissionMethod2));
       
       console.log('Resultados de coincidencia:', { commissionMatch, lastNameMatch, firstNameMatch, ciStudentMatch, academicIndexMatch, preUniversityMatch, provinceMatch, genderMatch, admissionMethodMatch });
       
-      // Devolver true solo si todos los filtros coinciden
+      // Devolver true solo si todos los tipos de filtros coinciden
+      // Pero dentro de cada tipo, basta con que coincida con el primer O el segundo filtro
       return commissionMatch && lastNameMatch && firstNameMatch && ciStudentMatch && 
              academicIndexMatch && preUniversityMatch && provinceMatch && 
              genderMatch && admissionMethodMatch;
