@@ -109,7 +109,7 @@ export class EditStudentComponent implements OnInit {
 
 
   // Función para manejar el submit del formulario
-  async onSubmit(): Promise<void> {
+  async onSubmit(shouldNavigate: boolean = true): Promise<void> {
     if (this.studentForm.valid) {
       try {
         const formData = this.studentForm.getRawValue(); // Obtiene los valores incluyendo los campos deshabilitados
@@ -126,7 +126,9 @@ export class EditStudentComponent implements OnInit {
 
         if (response.ok) {
           this.messagesService.success('La operación se completó correctamente');
-          this.router.navigate(['/organization/list-student']);
+          if (shouldNavigate) {
+            this.router.navigate(['/organization/list-student']);
+          }
         } else {
           this.messagesService.error('Error al actualizar el estudiante');
         }

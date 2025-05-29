@@ -216,12 +216,22 @@
             <app-icon name="menu" class="icon"></app-icon>
             Cancelar
           </button>
+
+          <button
+          class="create-list"
+          type="button"         
+          (click)="onSubmit(false)"
+        >
+        <app-icon name="pencilWhite" class="icon"></app-icon>
+        
+          Editar 
+        </button>
   
           <!-- Botón: Crear y regresar al listado -->
           <button
             type="button"
             class="create-list"
-            (click)="onSubmit()"
+            (click)="onSubmit(true)"
           >
           <app-icon name="pencilWhite" class="icon"></app-icon>
   

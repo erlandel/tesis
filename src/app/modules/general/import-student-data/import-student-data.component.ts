@@ -275,7 +275,10 @@ export class ImportStudentDataComponent implements OnInit {
           } else if (action === 'create-list') {
             this.router.navigate(['/general/student-excel-list']);
           }
-        } else {
+        }else if(response.status === 400){
+          this.messagesService.error('El nombre del excel ya existe');
+        }
+        else {
           this.messagesService.error('Error al registrar los datos del excel');
         }
       } catch (error) {
