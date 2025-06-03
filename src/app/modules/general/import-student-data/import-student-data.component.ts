@@ -175,8 +175,43 @@ export class ImportStudentDataComponent implements OnInit {
             return studentData;
           });
           // Imprimir el arreglo filtrado en la consola
-          console.log('Array filtrado de estudiantes:', JSON.stringify(studentDataArray, null, 2));
-          console.log('Número total de estudiantes válidos:', studentDataArray.length);
+          // console.log('Array filtrado de estudiantes:', JSON.stringify(studentDataArray, null, 2));
+          // console.log('Número total de estudiantes válidos:', studentDataArray.length);
+
+
+          // Transformar los datos para ambas llamadas
+          const transformedData = studentDataArray.map(student => {
+            const nombres = student.firstName.split(' ');
+            const apellidos = student.lastName.split(' ');
+
+            return {
+              identidad_numero: student.ciStudent,
+              primer_nombre: nombres[0] || '',
+              segundo_nombre: nombres.length > 1 ? nombres.slice(1).join(' ') : null,
+              primer_apellido: apellidos[0] || '',
+              segundo_apellido: apellidos.length > 1 ? apellidos.slice(1).join(' ') : '',
+              sexo: student.gender,
+              direccion: student.address,
+              provincia_residencia: student.province,
+              municipio_residencia: student.municipality,
+              ciudadania: student.nationality,
+              color_piel: student.skinColor,
+              // Campos adicionales
+              preUniversity: student.preUniversity,
+              admissionMethod: student.admissionMethod,
+              motherEducation: student.motherEducation,
+              fatherEducation: student.fatherEducation,
+              motherOccupation: student.motherOccupation,
+              fatherOccupation: student.fatherOccupation,
+              motherWorkSector: student.motherWorkSector,
+              fatherWorkSector: student.fatherWorkSector,
+              academicIndex: student.academicIndex,
+              origin: student.origin,
+              situation: student.situation
+            };
+          });
+
+          console.log('Datos transformados:', JSON.stringify(transformedData, null, 2));
 
           // Enviar los datos transformados al backend para análisis
           try {
@@ -185,17 +220,19 @@ export class ImportStudentDataComponent implements OnInit {
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify(studentDataArray)  
+              body: JSON.stringify(transformedData)
             });
 
             if (response.status === 200 || response.status === 201) {
-              // Enviar el arreglo de estudiantes al backend
+              console.log('Datos transformados:', JSON.stringify(transformedData, null, 2));
+
+              // Segunda llamada con los mismos datos transformados
               const secondResponse = await fetch('http://localhost:3000/students/AddStudentsbyExcel', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(studentDataArray)  
+                body: JSON.stringify(transformedData)  // Enviamos los datos transformados
               });
 
               if (secondResponse.status === 200 || secondResponse.status === 201) {
@@ -206,17 +243,10 @@ export class ImportStudentDataComponent implements OnInit {
                 this.messagesService.error('Error al procesar los datos. Por favor, inténtelo de nuevo.');
               }
             } else {
-              const errorData = await response.json();          
-     
-              // Guardar los datos de error en el servicio
+              const errorData = await response.json();
               this.errorReportService.setErrorData(errorData);
-              
-              // Navegar al componente de reporte de errores
-              this.router.navigate(['/general/error-report-excel']);           
-            
-            
-            console.log('la respuesta: ' + response.status);
-            
+              this.router.navigate(['/general/error-report-excel']);
+              console.log('la respuesta: ' + response.status);
             }
           } catch (error) {
             console.error('Error en las peticiones:', error);
@@ -246,7 +276,7 @@ export class ImportStudentDataComponent implements OnInit {
 
   async onSubmit(action: string = 'create'): Promise<void> {
     console.log('Form data:', this.importForm.value);
-    
+
     // Verificar que el formulario sea válido y que el archivo haya sido analizado
     if (this.importForm.valid && this.fileAnalyzed) {
       // Crear un objeto FormData para enviar los datos y el archivo
@@ -263,10 +293,10 @@ export class ImportStudentDataComponent implements OnInit {
           method: 'POST',
           body: formData
         });
-        
-        if (response.status === 200 || response.status === 201) {    
-          
-          this.messagesService.success('Datos del excel registrados correctamente');    
+
+        if (response.status === 200 || response.status === 201) {
+
+          this.messagesService.success('Datos del excel registrados correctamente');
 
           if (action === 'create') {
             this.importForm.reset();
@@ -275,7 +305,7 @@ export class ImportStudentDataComponent implements OnInit {
           } else if (action === 'create-list') {
             this.router.navigate(['/general/student-excel-list']);
           }
-        }else if(response.status === 400){
+        } else if (response.status === 400) {
           this.messagesService.error('El nombre del excel ya existe');
         }
         else {
