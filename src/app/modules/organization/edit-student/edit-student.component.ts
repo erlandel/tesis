@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';  // Para hacer las peticiones
 import { ActivatedRoute, Router } from '@angular/router';
 import { FortesMessagesService } from 'src/app/core/messages/FortesMessages.service';
 import { StudentData } from '../../../../interface/studentData';
+import { StudentDataFUC } from 'src/interface/studentDataFUC';
 
 
 
@@ -85,27 +86,32 @@ export class EditStudentComponent implements OnInit {
   }
 
 
-  updateStudentFUC() {
-    const ciStudent = this.studentForm.get('ciStudent')!.value; // Use the non-null assertion operator
-    this.http.get(`http://localhost:3000/students/FUC/${ciStudent}`).subscribe({
-      next: (response: any) => {
-        // Suponiendo que la respuesta contiene los datos actualizados
-        this.studentForm.patchValue({
-          nationality: response.nationality,
-          lastName: response.lastName,
-          firstName: response.firstName,
-          address: response.address,
-          province: response.province,
-          municipality: response.municipality,
-          skinColor: response.skinColor,
-          gender: response.gender,
-        });
+  updateStudentFUC(): void {
+    const ciStudent = this.studentForm.get('ciStudent')!.value;
+  
+    this.http.get<StudentDataFUC>(`http://localhost:3000/students/FUC/${ciStudent}`).subscribe({
+      next: (response) => {
+        console.log(response);
+        const transformedData: Partial<StudentData> = {
+          ciStudent: response.identidad_numero,
+          nationality: response.ciudadania,
+          lastName: `${response.primer_apellido} ${response.segundo_apellido ?? ''}`.trim(),
+          firstName: `${response.primer_nombre} ${response.segundo_nombre ?? ''}`.trim(),
+          address: response.direccion,
+          province: response.provincia_residencia,
+          municipality: response.municipio_residencia,
+          skinColor: response.color_piel,
+          gender: response.sexo,
+        };
+  
+        this.studentForm.patchValue(transformedData);
       },
       error: (error) => {
         console.error('Error updating student', error);
       }
     });
   }
+  
 
 
   // Función para manejar el submit del formulario

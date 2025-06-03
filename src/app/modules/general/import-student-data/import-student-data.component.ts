@@ -55,7 +55,7 @@ export class ImportStudentDataComponent implements OnInit {
     this.importForm = this.fb.group({
       name: ['', Validators.required],
       modelType: ['', Validators.required],
-      description: [''],
+      description: ['', Validators.required],
       file: [null, Validators.required]
     });
   }

@@ -96,7 +96,7 @@ export class ListStudentExcelComponent implements OnInit {
   }
   
   // No olvidar limpiar el event listener cuando se destruye el componente
-  ngOnDestroy(): void {
+  ongOnDestroy(): void {
     document.removeEventListener('click', this.handleOutsideClick.bind(this));
   }
   
